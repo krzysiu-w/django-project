@@ -8,11 +8,3 @@ class Person(models.Model):
     skils = models.TextField()
     
 
-
-class Skills(models.Model):
-    python = models.IntegerField(default=0)
-    cpp = models.IntegerField(default=0)
-    english = models.IntegerField(default=0)
-    django = models.IntegerField(default=0)
-    creativity = models.IntegerField(default=0) 
-    comunication = models.IntegerField(default=0) 
