@@ -1,15 +1,18 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from candidates.models import Skills
-from candidates.models import Person
-from candidates.serializers import PersonSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import authentication, permissions
-from django.contrib.auth.models import User
+from .models import Person
+from .forms import AddPerson
 
-class addPerson(APIView):
+def get_name(request):
+    if request.method == 'POST':
+        form = AddPerson(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('list')
+    else:
+        form = AddPerson()
+    return render(request, 'addperson/index.html', {'form':form})
 
-    serializer_class = PersonSerializer
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+def candidatesList(request):
+    if request.method == 'GET':
+        c = Person.objects.all()
+        return render(request, 'list/index.html', {'list':c})
