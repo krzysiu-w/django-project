@@ -6,6 +6,8 @@ from candidates import views
 urlpatterns = [
     path('candidates/', views.get_name),
     path('candidates/list', views.candidatesList),
+    path('candidates/skills', views.get_skills),
+
 
 ]
 
