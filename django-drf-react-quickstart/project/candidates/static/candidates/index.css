@@ -27,6 +27,7 @@ input {
 
 input:focus {
     box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15)!important;
+    background-color: #303030;
     outline: none;
 }
 
@@ -49,4 +50,9 @@ input:focus {
     color: #212529;
     background-color: #ffbf00;
     border-color: #ffbf00;
+}
+input:-internal-autofill-selected {
+    background-color: #303030 !important;
+    background-image: none !important;
+    color: rgb(255, 255, 255) !important;
 }

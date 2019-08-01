@@ -1,3 +1,5 @@
 {% csrf_token %}
+{% load static %}
+<link rel="stylesheet" href="{% static "candidates/index.css" %}">
 <p>Lista:<p>
 <p>{{list}}</p>
