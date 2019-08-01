@@ -10,7 +10,7 @@ class AddSkills(forms.Form):
     l=[]
     for i in allc:
         name = i.first_name+i.last_name
-        temp=[i, name]
+        temp=[i.id, name]
         l.append(temp)
     cand = tuple(l)
     i=1
