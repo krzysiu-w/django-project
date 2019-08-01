@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Bar } from "react-chartjs-2";
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Table } from 'react-bootstrap';
 
 
 
 const juryList = ["Mariusz Max Kolonko", "Bogusław Łęcina", "Mistrz Shao Lin"];
 const skillsList = ["Python", "Cpp", "JS", "English"];
+const candidates = ["Tomek Makowski", "Niemy Michałek", "Uczeń Kamil Zdun"];
 
 const people = [
     {
@@ -83,23 +84,148 @@ class Dashboard extends React.Component {
         this.handleChangeSkill = this.handleChangeSkill.bind(this);
         this.handleChangeRecruter = this.handleChangeRecruter.bind(this);
         this.handleMarkCandidate = this.handleMarkCandidate.bind(this);
+        this.handleCreateCurrentRates = this.handleCreateCurrentRates.bind(this);
         this.state = {
             currentJury: juryList[0],
             currentSkill: skillsList[0],
-            currentCandidates: ["Tomek Makowski", "Niemy Michałek", "Uczeń Kamil Zdun"]
+            currentCandidates: candidates,
+            currentRates: this.handleCreateCurrentRates(candidates, juryList[0], skillsList[0]),
+            dataBar: {
+                labels: candidates,
+                datasets: [
+                    {
+                        label: skillsList[0],
+                        data: this.handleCreateCurrentRates(candidates, juryList[0], skillsList[0]),
+                        backgroundColor: [
+                            "rgba(255, 134,159,0.4)",
+                            "rgba(98,  182, 239,0.4)",
+                            "rgba(255, 218, 128,0.4)",
+                            "rgba(113, 205, 205,0.4)",
+                            "rgba(170, 128, 252,0.4)",
+                            "rgba(255, 177, 101,0.4)"
+                        ],
+                        borderWidth: 2,
+                        borderColor: [
+                            "rgba(255, 134, 159, 1)",
+                            "rgba(98,  182, 239, 1)",
+                            "rgba(255, 218, 128, 1)",
+                            "rgba(113, 205, 205, 1)",
+                            "rgba(170, 128, 252, 1)",
+                            "rgba(255, 177, 101, 1)"
+                        ]
+                    }
+                ]
+            },
+            barChartOptions: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [
+                        {
+                            barPercentage: 1,
+                            gridLines: {
+                                display: true,
+                                color: "rgba(0, 0, 0, 0.1)"
+                            }
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            gridLines: {
+                                display: true,
+                                color: "rgba(0, 0, 0, 0.1)"
+                            },
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }
+                    ]
+                }
+            }
         }
+
+        console.log(this.state.currentRates);
     }
+
+    handleCreateCurrentRates(currentCandidates, currentJury, currentSkill) {
+        let table = [];
+        currentCandidates.map((item) => {
+            let canItem = item;
+            people.map((item2) => {
+                if (item2.name == canItem) {
+                    table.push(item2[currentJury][currentSkill]);
+                }
+            });
+        });
+        return table;
+    }
+
     handleChangeSkill(skill) {
-        this.setState(() => {
+        this.setState((prev) => {
+            console.log(prev);
             return {
-                currentSkill: skill
+                currentSkill: skill,
+                currentRates: this.handleCreateCurrentRates(prev.currentCandidates, prev.currentJury, skill),
+                dataBar: {
+                    labels: prev.currentCandidates,
+                    datasets: [
+                        {
+                            label: skill,
+                            data: this.handleCreateCurrentRates(prev.currentCandidates, prev.currentJury, skill),
+                            backgroundColor: [
+                                "rgba(255, 134,159,0.4)",
+                                "rgba(98,  182, 239,0.4)",
+                                "rgba(255, 218, 128,0.4)",
+                                "rgba(113, 205, 205,0.4)",
+                                "rgba(170, 128, 252,0.4)",
+                                "rgba(255, 177, 101,0.4)"
+                            ],
+                            borderWidth: 2,
+                            borderColor: [
+                                "rgba(255, 134, 159, 1)",
+                                "rgba(98,  182, 239, 1)",
+                                "rgba(255, 218, 128, 1)",
+                                "rgba(113, 205, 205, 1)",
+                                "rgba(170, 128, 252, 1)",
+                                "rgba(255, 177, 101, 1)"
+                            ]
+                        }
+                    ]
+                }
             };
         })
     }
     handleChangeRecruter(recruter) {
-        this.setState(() => {
+        this.setState((prev) => {
             return {
-                currentJury: recruter
+                currentJury: recruter,
+                currentRates: this.handleCreateCurrentRates(prev.currentCandidates, recruter, prev.currentSkill),
+                dataBar: {
+                    labels: prev.currentCandidates,
+                    datasets: [
+                        {
+                            label: prev.currentSkill,
+                            data: this.handleCreateCurrentRates(prev.currentCandidates, recruter, prev.currentSkill),
+                            backgroundColor: [
+                                "rgba(255, 134,159,0.4)",
+                                "rgba(98,  182, 239,0.4)",
+                                "rgba(255, 218, 128,0.4)",
+                                "rgba(113, 205, 205,0.4)",
+                                "rgba(170, 128, 252,0.4)",
+                                "rgba(255, 177, 101,0.4)"
+                            ],
+                            borderWidth: 2,
+                            borderColor: [
+                                "rgba(255, 134, 159, 1)",
+                                "rgba(98,  182, 239, 1)",
+                                "rgba(255, 218, 128, 1)",
+                                "rgba(113, 205, 205, 1)",
+                                "rgba(170, 128, 252, 1)",
+                                "rgba(255, 177, 101, 1)"
+                            ]
+                        }
+                    ]
+                }
             };
         })
     }
@@ -113,19 +239,78 @@ class Dashboard extends React.Component {
                     i++;
                 }
             });
-            this.setState(() => {
+
+            this.setState((prev) => {
+                console.log(prev);
                 return {
-                    currentCandidates: newTable
+                    currentCandidates: newTable,
+                    currentRates: this.handleCreateCurrentRates(newTable, this.state.currentJury, this.state.currentSkill),
+                    dataBar: {
+                        labels: newTable,
+                        datasets: [
+                            {
+                                label: prev.currentSkill,
+                                data: this.handleCreateCurrentRates(newTable, prev.currentJury, prev.currentSkill),
+                                backgroundColor: [
+                                    "rgba(255, 134,159,0.4)",
+                                    "rgba(98,  182, 239,0.4)",
+                                    "rgba(255, 218, 128,0.4)",
+                                    "rgba(113, 205, 205,0.4)",
+                                    "rgba(170, 128, 252,0.4)",
+                                    "rgba(255, 177, 101,0.4)"
+                                ],
+                                borderWidth: 2,
+                                borderColor: [
+                                    "rgba(255, 134, 159, 1)",
+                                    "rgba(98,  182, 239, 1)",
+                                    "rgba(255, 218, 128, 1)",
+                                    "rgba(113, 205, 205, 1)",
+                                    "rgba(170, 128, 252, 1)",
+                                    "rgba(255, 177, 101, 1)"
+                                ]
+                            }
+                        ]
+                    }
                 };
             });
         }
         else {
+            let currTable = this.state.currentCandidates.concat([candidate]);
+
             this.setState((prev) => {
+                console.log(prev);
                 return {
-                    currentCandidates: prev.currentCandidates.concat([candidate])
+                    currentCandidates: prev.currentCandidates.concat([candidate]),
+                    currentRates: this.handleCreateCurrentRates(currTable, this.state.currentJury, this.state.currentSkill),
+                    dataBar: {
+                        labels: prev.currentCandidates.concat([candidate]),
+                        datasets: [
+                            {
+                                label: prev.currentSkill,
+                                data: this.handleCreateCurrentRates(prev.currentCandidates.concat([candidate]), prev.currentJury, prev.currentSkill),
+                                backgroundColor: [
+                                    "rgba(255, 134,159,0.4)",
+                                    "rgba(98,  182, 239,0.4)",
+                                    "rgba(255, 218, 128,0.4)",
+                                    "rgba(113, 205, 205,0.4)",
+                                    "rgba(170, 128, 252,0.4)",
+                                    "rgba(255, 177, 101,0.4)"
+                                ],
+                                borderWidth: 2,
+                                borderColor: [
+                                    "rgba(255, 134, 159, 1)",
+                                    "rgba(98,  182, 239, 1)",
+                                    "rgba(255, 218, 128, 1)",
+                                    "rgba(113, 205, 205, 1)",
+                                    "rgba(170, 128, 252, 1)",
+                                    "rgba(255, 177, 101, 1)"
+                                ]
+                            }
+                        ]
+                    }
                 };
             });
-        }
+        }this.props.currentRates
     }
     render() {
         return (
@@ -137,6 +322,9 @@ class Dashboard extends React.Component {
                             currentCandidates={this.state.currentCandidates}
                             currentJury={this.state.currentJury}
                             currentSkill={this.state.currentSkill}
+                            currentRates={this.state.currentRates}
+                            dataBar={this.state.dataBar}
+                            barChartOptions={this.state.barChartOptions}
                         />
                     </Col>
                     <Col md={4}>
@@ -187,12 +375,15 @@ class CustomChart extends React.Component {
         return (
             <div className={this.props.className}>
                 {
-                    `Current jury: ${this.props.currentJury} || Current skill: ${this.props.currentSkill} || Current candidates: ${this.props.currentCandidates}`
+                    `Current jury: ${this.props.currentJury} || Current skill: ${this.props.currentSkill} || Current candidates: ${this.props.currentCandidates} || Current rates: ${this.props.currentRates}`
                 }
-                <ChartsPage 
-                    currentCandidates={this.props.currentCandidates} 
+                <ChartsPage
+                    currentCandidates={this.props.currentCandidates}
                     currentSkill={this.props.currentSkill}
                     currentJury={this.props.currentJury}
+                    currentRates={this.props.currentRates}
+                    dataBar={this.props.dataBar}
+                    barChartOptions={this.props.barChartOptions}
                 />
             </div>
         );
@@ -202,66 +393,12 @@ class CustomChart extends React.Component {
 class ChartsPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            dataBar: {
-                labels: this.props.currentCandidates,
-                datasets: [
-                    {
-                        label: this.props.currentSkill,
-                        data: [5, 4, 3],
-                        backgroundColor: [
-                            "rgba(255, 134,159,0.4)",
-                            "rgba(98,  182, 239,0.4)",
-                            "rgba(255, 218, 128,0.4)",
-                            "rgba(113, 205, 205,0.4)",
-                            "rgba(170, 128, 252,0.4)",
-                            "rgba(255, 177, 101,0.4)"
-                        ],
-                        borderWidth: 2,
-                        borderColor: [
-                            "rgba(255, 134, 159, 1)",
-                            "rgba(98,  182, 239, 1)",
-                            "rgba(255, 218, 128, 1)",
-                            "rgba(113, 205, 205, 1)",
-                            "rgba(170, 128, 252, 1)",
-                            "rgba(255, 177, 101, 1)"
-                        ]
-                    }
-                ]
-            },
-            barChartOptions: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [
-                        {
-                            barPercentage: 1,
-                            gridLines: {
-                                display: true,
-                                color: "rgba(0, 0, 0, 0.1)"
-                            }
-                        }
-                    ],
-                    yAxes: [
-                        {
-                            gridLines: {
-                                display: true,
-                                color: "rgba(0, 0, 0, 0.1)"
-                            },
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }
-                    ]
-                }
-            }
-        }   
     }
     render() {
         return (
             <div className="chart-container">
                 <h3 className="mt-5">{this.props.currentJury}</h3>
-                <Bar data={this.state.dataBar} options={this.state.barChartOptions} />
+                <Bar data={this.props.dataBar} options={this.props.barChartOptions} />
             </div>
         );
     }
