@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Bar } from "react-chartjs-2";
-import { Container, Row, Col, Table } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 
 
@@ -125,7 +125,7 @@ class Dashboard extends React.Component {
                             barPercentage: 1,
                             gridLines: {
                                 display: true,
-                                color: "rgba(0, 0, 0, 0.1)"
+                                color: "rgba(255, 255, 255, 0.2)"
                             }
                         }
                     ],
@@ -133,7 +133,7 @@ class Dashboard extends React.Component {
                         {
                             gridLines: {
                                 display: true,
-                                color: "rgba(0, 0, 0, 0.1)"
+                                color: "rgba(255, 255, 255, 0.2)"
                             },
                             ticks: {
                                 beginAtZero: true
@@ -143,8 +143,6 @@ class Dashboard extends React.Component {
                 }
             }
         }
-
-        console.log(this.state.currentRates);
     }
 
     handleCreateCurrentRates(currentCandidates, currentJury, currentSkill) {
@@ -153,7 +151,7 @@ class Dashboard extends React.Component {
             let canItem = item;
             people.map((item2) => {
                 if (item2.name == canItem) {
-                    table.push(item2[currentJury][currentSkill]);
+                    table.push(parseFloat(item2[currentJury][currentSkill])*20);
                 }
             });
         });
@@ -162,7 +160,6 @@ class Dashboard extends React.Component {
 
     handleChangeSkill(skill) {
         this.setState((prev) => {
-            console.log(prev);
             return {
                 currentSkill: skill,
                 currentRates: this.handleCreateCurrentRates(prev.currentCandidates, prev.currentJury, skill),
@@ -241,7 +238,6 @@ class Dashboard extends React.Component {
             });
 
             this.setState((prev) => {
-                console.log(prev);
                 return {
                     currentCandidates: newTable,
                     currentRates: this.handleCreateCurrentRates(newTable, this.state.currentJury, this.state.currentSkill),
@@ -278,7 +274,6 @@ class Dashboard extends React.Component {
             let currTable = this.state.currentCandidates.concat([candidate]);
 
             this.setState((prev) => {
-                console.log(prev);
                 return {
                     currentCandidates: prev.currentCandidates.concat([candidate]),
                     currentRates: this.handleCreateCurrentRates(currTable, this.state.currentJury, this.state.currentSkill),
@@ -311,6 +306,9 @@ class Dashboard extends React.Component {
                 };
             });
         }this.props.currentRates
+    }
+    handleCreateColor(){
+
     }
     render() {
         return (
@@ -536,12 +534,20 @@ class Person extends React.Component {
     constructor(props) {
         super(props);
         this.handleMarkCandidate = this.handleMarkCandidate.bind(this);
+        this.handleShowDetails = this.handleShowDetails.bind(this);
         this.state = {
-            checked: false
+            drop: false
         }
     }
     handleMarkCandidate() {
         this.props.handleMarkCandidate(this.props.personName);
+    }
+    handleShowDetails(){
+        this.setState((prev) => {
+            return {
+                drop: !prev.drop
+            };
+        });
     }
     render() {
         return (
@@ -549,8 +555,12 @@ class Person extends React.Component {
                 <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
                 <span className="personName">{this.props.personName}</span>
                 <span className="personRate">
-                    {`${this.props.currentRate * 20}%`}
-                    <span className="dropDown"></span>
+                    <span 
+                        className="drop-down"
+                        onClick={this.handleShowDetails}
+                    >
+                        {this.state.drop ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i> }
+                    </span>
                 </span>
 
             </li>

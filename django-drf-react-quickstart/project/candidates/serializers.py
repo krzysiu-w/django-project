@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from candidates.models import Skills
 from candidates.models import Person
 
 
@@ -36,3 +35,11 @@ class PersonSerializer(serializers.Serializer):
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.save()
         return instance
+
+class SkillsSerializer(serializers.Serializer):
+    python = serializers.IntegerField()
+    cpp = serializers.IntegerField()
+    javascript = serializers.IntegerField()
+    english = serializers.IntegerField()
+    comunication = serializers.IntegerField()
+    creativity = serializers.IntegerField()

@@ -1,0 +1,10 @@
+{% csrf_token %}
+{% load static %}
+<link rel="stylesheet" href="{% static "candidates/index.css" %}">
+<div class="content">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit" class="btn btn-warning">
+    </form>
+</div>

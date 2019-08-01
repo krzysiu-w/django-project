@@ -125,3 +125,7 @@ ul > li {
 .chart-container{
     height: 80%!important;
 }
+
+.drop-down{
+    cursor: pointer;
+}
