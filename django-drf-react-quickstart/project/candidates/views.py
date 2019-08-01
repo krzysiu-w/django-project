@@ -29,14 +29,14 @@ def get_skills(request):
         form = AddSkills(request.POST)
         if form.is_valid():
             person=request.POST.get('person')
-            
-            temp.python=request.POST.get('python')
-            temp.cpp=request.POST.get('cpp')
-            temp.javascript=request.POST.get('javascript')
-            temp.english=request.POST.get('english')
-            temp.comunication=request.POST.get('comunication')
-            temp.creativity=request.POST.get('creativity')
-
+            temp=request.POST
+            # temp.python=request.POST.get('python')
+            # temp.cpp=request.POST.get('cpp')
+            # temp.javascript=request.POST.get('javascript')
+            # temp.english=request.POST.get('english')
+            # temp.comunication=request.POST.get('comunication')
+            # temp.creativity=request.POST.get('creativity')
+            temp=list(temp)
             person.skils=json.dumps(temp)
             person.save()
             return HttpResponseRedirect('list')
