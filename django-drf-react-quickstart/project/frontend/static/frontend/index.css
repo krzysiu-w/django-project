@@ -123,9 +123,162 @@ ul > li {
 }
 
 .chart-container{
-    height: 80%!important;
+    height: 600px!important;
 }
 
 .drop-down{
     cursor: pointer;
 }
+
+.show-content{
+    display: none;
+}
+
+.box-shadow{
+    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
+}
+
+.box-shadow-1{
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+
+/* {
+    padding: 0;
+    margin: 0;
+    font-family: "Arial";
+    font-size: 18px;
+    color: #fff;
+}
+
+body{
+    background-color: #181C30;
+}
+
+html, body, #root, #root > div{
+    min-height: 100vh;
+}
+
+.dashboard{
+    margin: 0 auto;
+    width: 90%;
+}
+
+ul{
+    list-style-type: none;
+}
+
+ul > li {
+    padding: 10px;
+}
+
+.jury, .people, .skills{
+    margin: 20px 0;
+    text-indent: 10px;
+    background-color: #27293d;
+    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21)!important;
+}
+
+.jury{
+    
+}
+
+.people{
+}
+
+.custom-chart{
+    height: 100%;
+}
+
+.skills{
+    
+}
+
+.person-skill{
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.person-skill:hover{
+    background-color: #5e5e5e;
+}
+
+.person-skill.active{
+    color: #ff3547;
+    background-color: #5e5e5e;
+} 
+
+.recruter{
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.recruter:hover{
+    background-color: #5e5e5e;
+}
+
+.recruter.active{
+    color: #ff3547;
+    background-color: #5e5e5e;
+} 
+
+.custom-title{
+    font-weight: 900;
+    background-color: #ff3547;
+    font-size: 24px;
+    padding: 20px 0;
+    position: relative;
+}
+
+.custom-title > span{
+    float: right;
+    margin: 0 20px;
+}
+
+.personId{
+    position: relative;
+    cursor: pointer;
+    float: left;
+    border: #ff3547 solid 1px;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: 0 10px 0 0;
+}
+
+.personId > span{
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    transition: 0.6 all;
+}
+
+.personId.active > span{
+    background-color: #ff3547;
+}
+
+.personRate{
+    float: right;
+}
+
+.chart-container{
+    height: 600px!important;
+}
+
+.drop-down{
+    cursor: pointer;
+}
+
+.show-content{
+    display: none;
+}
+
+.box-shadow{
+    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21)!important;
+}
+ */
