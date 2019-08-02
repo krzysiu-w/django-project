@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CustomNavbar from './components/Nav.js'
+import CustomNavbar from "./components/Nav.js";
 import { Bar, Pie } from "react-chartjs-2";
 import { Row, Col, Button } from 'react-bootstrap';
 
@@ -366,6 +366,7 @@ class Dashboard extends React.Component {
             <div>
                 <CustomNavbar />
                 <div className="dashboard">
+
                     <Row>
                         <Col md={8}>
                             <CustomChart
@@ -413,6 +414,7 @@ class Dashboard extends React.Component {
                     </Row>
                 </div>
             </div>
+
 
 
         );
@@ -621,7 +623,7 @@ class People extends React.Component {
     render() {
         return (
             <div className={this.props.className}>
-                <h2 className="custom-title">Candidates<span>{this.props.currentSkill}</span></h2>
+                <h2 className="custom-title">Candidates</h2>
                 <ul>
                     {people.map((item, i) =>
                         <Person
