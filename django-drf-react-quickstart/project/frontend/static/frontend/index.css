@@ -10,6 +10,10 @@ body{
     background-color: #303030;
 }
 
+html{
+    overflow-y: auto;
+}
+
 html, body, #root, #root > div{
     min-height: 100vh;
 }
@@ -32,21 +36,6 @@ ul > li {
     text-indent: 10px;
     background-color: #424242;
     box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21)!important;
-}
-
-.jury{
-    
-}
-
-.people{
-}
-
-.custom-chart{
-    height: 100%;
-}
-
-.skills{
-    
 }
 
 .person-skill{
@@ -144,6 +133,7 @@ ul > li {
 
 nav {
     background-color: #ffbf00 !important;
+    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
 }
 
 
