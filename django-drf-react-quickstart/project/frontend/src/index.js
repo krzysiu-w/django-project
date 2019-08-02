@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import CustomNavbar from './components/Nav.js'
 import { Bar, Pie } from "react-chartjs-2";
 import { Row, Col, Button } from 'react-bootstrap';
 
@@ -362,52 +363,55 @@ class Dashboard extends React.Component {
     }
     render() {
         return (
-            <div className="dashboard">
-                <Row>
-                    <Col md={8}>
-                        <CustomChart
-                            className="custom-chart"
-                            currentCandidates={this.state.currentCandidates}
-                            currentJury={this.state.currentJury}
-                            currentSkill={this.state.currentSkill}
-                            currentRates={this.state.currentRates}
-                            dataBar={this.state.dataBar}
-                            barChartOptions={this.state.barChartOptions}
-                        />
-                    </Col>
-                    <Col md={4}>
-                        <Row>
-                            <Col>
-                                <Jury
-                                    className="jury"
-                                    currentJury={this.state.currentJury}
-                                    handleChangeRecruter={this.handleChangeRecruter}
-                                    handleSetAverage={this.handleSetAverage}
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <People
-                                    className="people"
-                                    currentSkill={this.state.currentSkill}
-                                    currentJury={this.state.currentJury}
-                                    handleMarkCandidate={this.handleMarkCandidate}
-                                    currentCandidates={this.state.currentCandidates}
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Skills
-                                    className="skills"
-                                    currentSkill={this.state.currentSkill}
-                                    handleChangeSkill={this.handleChangeSkill}
-                                />
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+            <div>
+                <CustomNavbar />
+                <div className="dashboard">
+                    <Row>
+                        <Col md={8}>
+                            <CustomChart
+                                className="custom-chart"
+                                currentCandidates={this.state.currentCandidates}
+                                currentJury={this.state.currentJury}
+                                currentSkill={this.state.currentSkill}
+                                currentRates={this.state.currentRates}
+                                dataBar={this.state.dataBar}
+                                barChartOptions={this.state.barChartOptions}
+                            />
+                        </Col>
+                        <Col md={4}>
+                            <Row>
+                                <Col>
+                                    <Jury
+                                        className="jury"
+                                        currentJury={this.state.currentJury}
+                                        handleChangeRecruter={this.handleChangeRecruter}
+                                        handleSetAverage={this.handleSetAverage}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <People
+                                        className="people"
+                                        currentSkill={this.state.currentSkill}
+                                        currentJury={this.state.currentJury}
+                                        handleMarkCandidate={this.handleMarkCandidate}
+                                        currentCandidates={this.state.currentCandidates}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Skills
+                                        className="skills"
+                                        currentSkill={this.state.currentSkill}
+                                        handleChangeSkill={this.handleChangeSkill}
+                                    />
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </div>
             </div>
 
 
@@ -422,7 +426,7 @@ class CustomChart extends React.Component {
     }
     render() {
         return (
-            <div className={this.props.className}>  
+            <div className={this.props.className}>
                 <BarChart
                     currentCandidates={this.props.currentCandidates}
                     currentSkill={this.props.currentSkill}
