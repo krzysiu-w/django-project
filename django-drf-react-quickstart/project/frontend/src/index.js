@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Bar } from "react-chartjs-2";
-import { Row, Col } from 'react-bootstrap';
+import { Bar, Pie } from "react-chartjs-2";
+import { Row, Col, Button } from 'react-bootstrap';
 
 
 
@@ -78,6 +78,23 @@ const people = [
     }
 ]
 
+people.map((item) => {
+    item["Average Rates"] = {
+        Python: handleCalculateAverage(people[item.id], "Python"),
+        Cpp: handleCalculateAverage(people[item.id], "Cpp"),
+        JS: handleCalculateAverage(people[item.id], "JS"),
+        English: handleCalculateAverage(people[item.id], "English")
+    };
+});
+
+function handleCalculateAverage(person, skill) {
+    let average = 0;
+    juryList.map((item2) => {
+        average += person[item2][skill]
+    });
+    return (average / skillsList.length);
+}
+
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -85,17 +102,18 @@ class Dashboard extends React.Component {
         this.handleChangeRecruter = this.handleChangeRecruter.bind(this);
         this.handleMarkCandidate = this.handleMarkCandidate.bind(this);
         this.handleCreateCurrentRates = this.handleCreateCurrentRates.bind(this);
+        this.handleSetAverage = this.handleSetAverage.bind(this);
         this.state = {
-            currentJury: juryList[0],
+            currentJury: "Average Rates",
             currentSkill: skillsList[0],
             currentCandidates: candidates,
-            currentRates: this.handleCreateCurrentRates(candidates, juryList[0], skillsList[0]),
+            currentRates: this.handleCreateCurrentRates(candidates, "Average Rates", skillsList[0]),
             dataBar: {
                 labels: candidates,
                 datasets: [
                     {
                         label: skillsList[0],
-                        data: this.handleCreateCurrentRates(candidates, juryList[0], skillsList[0]),
+                        data: this.handleCreateCurrentRates(candidates, "Average Rates", skillsList[0]),
                         backgroundColor: [
                             "rgba(255, 134,159,0.4)",
                             "rgba(98,  182, 239,0.4)",
@@ -151,7 +169,7 @@ class Dashboard extends React.Component {
             let canItem = item;
             people.map((item2) => {
                 if (item2.name == canItem) {
-                    table.push(parseFloat(item2[currentJury][currentSkill])*20);
+                    table.push(parseFloat(item2[currentJury][currentSkill]) * 20);
                 }
             });
         });
@@ -224,7 +242,7 @@ class Dashboard extends React.Component {
                     ]
                 }
             };
-        })
+        });
     }
     handleMarkCandidate(candidate) {
         if (this.state.currentCandidates.indexOf(candidate) > -1) {
@@ -305,10 +323,42 @@ class Dashboard extends React.Component {
                     }
                 };
             });
-        }this.props.currentRates
+        } this.props.currentRates
     }
-    handleCreateColor(){
-
+    handleSetAverage() {
+        console.log("click");
+        this.setState((prev) => {
+            return {
+                currentJury: "Average Rates",
+                currentRates: this.handleCreateCurrentRates(prev.currentCandidates, "Average Rates", prev.currentSkill),
+                dataBar: {
+                    labels: prev.currentCandidates,
+                    datasets: [
+                        {
+                            label: prev.currentSkill,
+                            data: this.handleCreateCurrentRates(prev.currentCandidates, "Average Rates", prev.currentSkill),
+                            backgroundColor: [
+                                "rgba(255, 134,159,0.4)",
+                                "rgba(98,  182, 239,0.4)",
+                                "rgba(255, 218, 128,0.4)",
+                                "rgba(113, 205, 205,0.4)",
+                                "rgba(170, 128, 252,0.4)",
+                                "rgba(255, 177, 101,0.4)"
+                            ],
+                            borderWidth: 2,
+                            borderColor: [
+                                "rgba(255, 134, 159, 1)",
+                                "rgba(98,  182, 239, 1)",
+                                "rgba(255, 218, 128, 1)",
+                                "rgba(113, 205, 205, 1)",
+                                "rgba(170, 128, 252, 1)",
+                                "rgba(255, 177, 101, 1)"
+                            ]
+                        }
+                    ]
+                }
+            };
+        });
     }
     render() {
         return (
@@ -332,6 +382,7 @@ class Dashboard extends React.Component {
                                     className="jury"
                                     currentJury={this.state.currentJury}
                                     handleChangeRecruter={this.handleChangeRecruter}
+                                    handleSetAverage={this.handleSetAverage}
                                 />
                             </Col>
                         </Row>
@@ -371,11 +422,8 @@ class CustomChart extends React.Component {
     }
     render() {
         return (
-            <div className={this.props.className}>
-                {
-                    `Current jury: ${this.props.currentJury} || Current skill: ${this.props.currentSkill} || Current candidates: ${this.props.currentCandidates} || Current rates: ${this.props.currentRates}`
-                }
-                <ChartsPage
+            <div className={this.props.className}>  
+                <BarChart
                     currentCandidates={this.props.currentCandidates}
                     currentSkill={this.props.currentSkill}
                     currentJury={this.props.currentJury}
@@ -388,7 +436,7 @@ class CustomChart extends React.Component {
     }
 }
 
-class ChartsPage extends React.Component {
+class BarChart extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -398,6 +446,57 @@ class ChartsPage extends React.Component {
                 <h3 className="mt-5">{this.props.currentJury}</h3>
                 <Bar data={this.props.dataBar} options={this.props.barChartOptions} />
             </div>
+        );
+    }
+}
+
+class PieChart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.currentAverageRates = [];
+        skillsList.map((item) => {
+            let average = 0;
+            juryList.map((item2) => {
+                average += this.props.currentPerson[item2][item]
+            });
+            this.currentAverageRates.push(average / skillsList.length);
+        });
+        this.state = {
+            dataPie: {
+                labels: skillsList,
+                datasets: [
+                    {
+                        data: this.currentAverageRates,
+                        backgroundColor: [
+                            "#F7464A",
+                            "#46BFBD",
+                            "#FDB45C",
+                            "#949FB1",
+                            "#4D5360",
+                            "#AC64AD"
+                        ],
+                        hoverBackgroundColor: [
+                            "#FF5A5E",
+                            "#5AD3D1",
+                            "#FFC870",
+                            "#A8B3C5",
+                            "#616774",
+                            "#DA92DB"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+
+
+    render() {
+        return (
+            <div>
+                <Pie data={this.state.dataPie} options={{ responsive: true }} />
+            </div>
+
+
         );
     }
 }
@@ -464,7 +563,14 @@ class Jury extends React.Component {
     render() {
         return (
             <div className={this.props.className}>
-                <h2 className="custom-title">Jury</h2>
+                <h2 className="custom-title">
+                    Jury
+                    <Button
+                        variant="warning"
+                        className="box-shadow-1 float-right mr-3"
+                        onClick={this.props.handleSetAverage}
+                    >Average</Button>
+                </h2>
                 <ul>
                     {juryList.map((item, i) =>
                         <Recruter
@@ -542,7 +648,7 @@ class Person extends React.Component {
     handleMarkCandidate() {
         this.props.handleMarkCandidate(this.props.personName);
     }
-    handleShowDetails(){
+    handleShowDetails() {
         this.setState((prev) => {
             return {
                 drop: !prev.drop
@@ -555,13 +661,21 @@ class Person extends React.Component {
                 <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
                 <span className="personName">{this.props.personName}</span>
                 <span className="personRate">
-                    <span 
+                    <span
                         className="drop-down"
                         onClick={this.handleShowDetails}
                     >
-                        {this.state.drop ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i> }
+                        {this.state.drop ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i>}
                     </span>
                 </span>
+
+                <Row mt={4} className="show-content">
+                    <Col>
+                        <PieChart
+                            currentPerson={people[this.props.personId]}
+                        />
+                    </Col>
+                </Row>
 
             </li>
         );
