@@ -1,12 +1,14 @@
 from django import forms
 from .models import Person
+from django.contrib.auth.models import User
+
 class AddPerson(forms.Form):
     first_name = forms.CharField(label = 'First name', max_length=30)
     last_name = forms.CharField(label = 'Last name', max_length=30)
 
 class AddSkills(forms.Form):
     allc = Person.objects.all()
-    
+    users = User.objects.all()
     l=[]
     for i in allc:
         name = i.first_name+i.last_name
@@ -20,7 +22,12 @@ class AddSkills(forms.Form):
         l.append(temp)
         i+=1
     RANGE=tuple(l)
-    rec = (['rec1', 'rec1'],['rec2', 'rec2'],['rec3', 'rec3'])
+    l=[]
+    for i in users:
+        temp=[i.id, i.username]
+        l.append(temp)
+    rec = tuple(l)
+    # rec = (['rec1', 'rec1'],['rec2', 'rec2'],['rec3', 'rec3'])
     recruter = forms.ChoiceField(label = 'Recruter', choices=rec, required=True)
     person = forms.ChoiceField(label = 'Candidate', choices=cand, required=True)
     python = forms.ChoiceField(label = 'python', choices=RANGE, required=True)
