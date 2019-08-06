@@ -20,17 +20,21 @@
               <a class="nav-item nav-link" href="http://127.0.0.1:8000/candidates/skills">Form</a>
             </div>
           </div>
-        </nav>
+      </nav>
   </header>
 
   <div class="content">
       <form action="" method="post">
+      {% csrf_token %}
           {{ form }}
           <input type="submit" value="Submit" class="btn btn-warning">
       </form>
   </div>
-  <div class="list">
-  
+  <div class="w50">
+  <h3>CANDIDATES</h3>
+    <table id="list">
+
+    </table>
   </div>
   <input style="display: none;" id="data" value="{{data}}">
   <script src="{% static 'candidates/script.js' %}"></script>

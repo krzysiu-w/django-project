@@ -13,7 +13,7 @@ def get_name(request):
             temp.first_name=request.POST.get('first_name')
             temp.last_name=request.POST.get('last_name')
             temp.save()
-            return HttpResponseRedirect('list')
+            return HttpResponseRedirect('')
     else:
         form = AddPerson()
         data=Person.objects.values('id', 'first_name', 'last_name', 'skills')

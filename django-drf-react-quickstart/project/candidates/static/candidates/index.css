@@ -6,7 +6,7 @@ body {
 }
 
 .content {
- margin-top: 100px;
+    margin-top: 100px;
 }
 
 label {
@@ -16,7 +16,7 @@ label {
 }
 
 input {
-    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21)!important;
+    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, .22), 0 25px 55px 0 rgba(0, 0, 0, .21) !important;
     margin-right: 5px;
     background-color: #303030;
     border: none;
@@ -26,16 +26,16 @@ input {
 }
 
 input:focus {
-    box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15)!important;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15) !important;
     background-color: #303030;
     outline: none;
 }
 
 .btn {
-    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21)!important;
+    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, .22), 0 25px 55px 0 rgba(0, 0, 0, .21) !important;
     padding: .40rem 1.10rem;
     font-size: .81rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin: .375rem;
     border: 0;
     border-radius: .125rem;
@@ -51,6 +51,7 @@ input:focus {
     background-color: #ffbf00;
     border-color: #ffbf00;
 }
+
 input:-internal-autofill-selected {
     background-color: #303030 !important;
     background-image: none !important;
@@ -59,8 +60,49 @@ input:-internal-autofill-selected {
 
 nav {
     background-color: #ffbf00 !important;
-    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
+    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, .22), 0 25px 55px 0 rgba(0, 0, 0, .21);
 }
+
 .nav-link {
     font-size: 18px;
+}
+
+.w50 {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 200px;
+}
+
+table {
+    width: 100%;
+    font-size: 25px;
+    
+    background-color: #424242;
+}
+
+td { 
+    border-right: 2px solid white;
+    text-align: center;
+    padding: 10px;
+}
+
+td:last-child {
+    border: none;
+}
+
+tr {
+    margin: 0 auto;
+}
+
+h3 {
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: #ffbf00;
+    width: 100%;
+    letter-spacing: 5px;
+    color: black;
+    margin-bottom: 0;
 }
