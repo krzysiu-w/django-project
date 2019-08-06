@@ -33,6 +33,7 @@ def get_skills(request):
         form = AddSkills(request.POST)
         if form.is_valid():
             person=Person.objects.get(id=request.POST.get('person'))
+            print(person.skills)
             skills=person.skills
             if skills!='':
                 skills=json.loads(skills)
