@@ -1,42 +1,27 @@
 {% csrf_token %}
 {% load static %}
-
-<html>
-<head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static "candidates/index.css" %}">
-</head>
-<body>
-  <header>
-      <nav class="navbar navbar-expand-lg navbar-light py-3">
-          <a class="navbar-brand mb-1" href="http://127.0.0.1:8000/frontend/">Your Future Best Worker</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-item nav-link" href="http://127.0.0.1:8000/frontend/">Home </a>
-              <a class="nav-item nav-link active" href="http://127.0.0.1:8000/candidates/">Link <span class="sr-only">(current)</span></a>
-              <a class="nav-item nav-link" href="http://127.0.0.1:8000/candidates/skills">Form</a>
-            </div>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light py-3">
+        <a class="navbar-brand mb-1" href="http://127.0.0.1:8000/frontend/">Your Future Best Worker</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="http://127.0.0.1:8000/frontend/">Home </a>
+            <a class="nav-item nav-link active" href="#">Link <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="http://127.0.0.1:8000/candidates/skills">Form</a>
           </div>
+        </div>
       </nav>
-  </header>
-
-  <div class="content">
-      <form action="" method="post">
-      {% csrf_token %}
-          {{ form }}
-          <input type="submit" value="Submit" class="btn btn-warning">
-      </form>
-  </div>
-  <div class="w50">
-  <h3>CANDIDATES</h3>
-    <table id="list">
-
-    </table>
-  </div>
-  <input style="display: none;" id="data" value="{{data}}">
-  <script src="{% static 'candidates/script.js' %}"></script>
-</body>
-</html>
+</header>
+<div class="content">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit" class="btn btn-warning">
+    </form>
+</div>

@@ -13,16 +13,14 @@ def get_name(request):
             temp.first_name=request.POST.get('first_name')
             temp.last_name=request.POST.get('last_name')
             temp.save()
-            return HttpResponseRedirect('')
+            return HttpResponseRedirect('list')
     else:
         form = AddPerson()
-        data=Person.objects.values('id', 'first_name', 'last_name', 'skills')
-        data=json.dumps(list(data))
-    return render(request, 'addperson/index.html', {'form':form, 'data':data})
+    return render(request, 'addperson/index.html', {'form':form})
 
 def candidatesList(request):
     if request.method == 'GET':
-        c = Person.objects.values('id', 'first_name', 'last_name', 'skills')
+        c = Person.objects.values('id', 'first_name', 'last_name', 'skils')
         c=json.dumps(list(c))
         # c=json.loads(c)
         # c=c+request.user.id
@@ -33,8 +31,7 @@ def get_skills(request):
         form = AddSkills(request.POST)
         if form.is_valid():
             person=Person.objects.get(id=request.POST.get('person'))
-            print(person.skills)
-            skills=person.skills
+            skills=person.skils
             if skills!='':
                 skills=json.loads(skills)
             else:
@@ -44,7 +41,7 @@ def get_skills(request):
                 if i!='person' and i!='recruter':
                     temp.update({i: request.POST.get(i)})
             skills[request.POST.get('recruter')]=temp
-            person.skills=json.dumps(skills)
+            person.skils=json.dumps(skills)
             person.save()
             return HttpResponseRedirect('list')
     else:

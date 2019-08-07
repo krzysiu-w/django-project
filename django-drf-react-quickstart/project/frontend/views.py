@@ -1,5 +1,10 @@
 from django.shortcuts import render
-
-# Create your views here.
+import json
+import sys
+from os import path
+sys.path.append( "..")
+from candidates.models import Person
 def index(request):
-    return render(request, 'frontend/index.html')
+    data=Person.objects.values('id', 'first_name', 'last_name', 'skils')
+    data=json.dumps(list(data))
+    return render(request, 'frontend/index.html', {'data': data})
