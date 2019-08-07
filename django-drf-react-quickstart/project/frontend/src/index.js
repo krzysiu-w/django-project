@@ -6,86 +6,159 @@ import { Row, Col, Button } from 'react-bootstrap';
 
 
 
-const juryList = ["Mariusz Max Kolonko", "Bogusław Łęcina", "Mistrz Shao Lin"];
-const skillsList = ["Python", "Cpp", "JS", "English"];
-const candidates = ["Tomek Makowski", "Niemy Michałek", "Uczeń Kamil Zdun"];
 
-const people = [
-    {
-        "id": 0,
-        "name": "Tomek Makowski",
-        "Mariusz Max Kolonko": {
-            "Python": 3,
-            "Cpp": 2,
-            "JS": 5,
-            "English": 4
-        },
-        "Bogusław Łęcina": {
-            "Python": 3,
-            "Cpp": 3,
-            "JS": 4,
-            "English": 3
-        },
-        "Mistrz Shao Lin": {
-            "Python": 1,
-            "Cpp": 2,
-            "JS": 3,
-            "English": 3
+let jo = document.getElementById("data").value;
+
+let people = JSON.parse(jo);
+let skillsList = [];
+let candidates = [];
+let juryList = [];
+const multiplier = 10;
+
+
+
+for (let i = 0; i < people.length; i++) {
+    if (people[i].skils) {
+    
+        people[i].skils = JSON.parse(people[i].skils);
+        
+        let temp = Object.getOwnPropertyNames(people[i].skils)
+        juryList = juryList.concat(temp)
+        let x;
+        for (x in people[i].skils) {
+            
+            skillsList = skillsList.concat(Object.getOwnPropertyNames(people[i].skils[x]));
+            let y;
+            for(y in people[i].skils[x]){
+                people[i].skils[x][y] = parseInt(people[i].skils[x][y])
+            }
+            
         }
-    },
-    {
-        "id": 1,
-        "name": "Niemy Michałek",
-        "Mariusz Max Kolonko": {
-            "Python": 1,
-            "Cpp": 2,
-            "JS": 3,
-            "English": 0
-        },
-        "Bogusław Łęcina": {
-            "Python": 0,
-            "Cpp": 0,
-            "JS": 0,
-            "English": 1
-        },
-        "Mistrz Shao Lin": {
-            "Python": 1,
-            "Cpp": 2,
-            "JS": 2,
-            "English": 3.5
-        }
-    },
-    {
-        "id": 2,
-        "name": "Uczeń Kamil Zdun",
-        "Mariusz Max Kolonko": {
-            "Python": 1,
-            "Cpp": 3,
-            "JS": 0,
-            "English": 4.5
-        },
-        "Bogusław Łęcina": {
-            "Python": 2,
-            "Cpp": 2,
-            "JS": 1,
-            "English": 5
-        },
-        "Mistrz Shao Lin": {
-            "Python": 1,
-            "Cpp": 2,
-            "JS": 2,
-            "English": 5
-        }
+        
+        people[i] = {...people[i], ...people[i].skils};
+        delete people[i].skils;
+
     }
-]
+    else{
+        people[i] = undefined;
+    }
+}
+
+let tableOfPeople = [];
+let i = 0;
+people.map((item) => {
+    if(item){
+        tableOfPeople[i] = item;
+        i++;
+    }
+});
+people = tableOfPeople;
+
+people.map((item, i) => {
+    item.name = `${item.first_name.trim()} ${item.last_name.trim()}`;
+    delete item.first_name;
+    delete item.last_name;
+    candidates[i] = item.name;
+});
+
+
+
+juryList = Array.from(new Set(juryList));
+skillsList = Array.from(new Set(skillsList));
+
+
+
+
+console.log(people, skillsList, juryList, candidates);
+
+// const juryList = ["Mariusz Max Kolonko", "Bogusław Łęcina", "Mistrz Shao Lin"];
+// const skillsList = ["Python", "Cpp", "JS", "English"];
+// const candidates = ["Tomek Makowski", "Niemy Michałek", "Uczeń Kamil Zdun"];
+
+// const people = [
+//     {
+//         "id": 0,
+//         "name": "Tomek Makowski",
+//         "Mariusz Max Kolonko": {
+//             "Python": 3,
+//             "Cpp": 2,
+//             "JS": 5,
+//             "English": 4
+//         },
+//         "Bogusław Łęcina": {
+//             "Python": 3,
+//             "Cpp": 3,
+//             "JS": 4,
+//             "English": 3
+//         },
+//         "Mistrz Shao Lin": {
+//             "Python": 1,
+//             "Cpp": 2,
+//             "JS": 3,
+//             "English": 3
+//         }
+//     },
+//     {
+//         "id": 1,
+//         "name": "Niemy Michałek",
+//         "Mariusz Max Kolonko": {
+//             "Python": 1,
+//             "Cpp": 2,
+//             "JS": 3,
+//             "English": 0
+//         },
+//         "Bogusław Łęcina": {
+//             "Python": 0,
+//             "Cpp": 0,
+//             "JS": 0,
+//             "English": 1
+//         },
+//         "Mistrz Shao Lin": {
+//             "Python": 1,
+//             "Cpp": 2,
+//             "JS": 2,
+//             "English": 3.5
+//         }
+//     },
+//     {
+//         "id": 2,
+//         "name": "Uczeń Kamil Zdun",
+//         "Mariusz Max Kolonko": {
+//             "Python": 1,
+//             "Cpp": 3,
+//             "JS": 0,
+//             "English": 4.5
+//         },
+//         "Bogusław Łęcina": {
+//             "Python": 2,
+//             "Cpp": 2,
+//             "JS": 1,
+//             "English": 5
+//         },
+//         "Mistrz Shao Lin": {
+//             "Python": 1,
+//             "Cpp": 2,
+//             "JS": 2,
+//             "English": 5
+//         }
+//     }
+// ]
+
+
+// people.map((item) => {
+//     item["Average Rates"] = {
+//         Python: handleCalculateAverage(people[item.id], "Python"),
+//         Cpp: handleCalculateAverage(people[item.id], "Cpp"),
+//         JS: handleCalculateAverage(people[item.id], "JS"),
+//         English: handleCalculateAverage(people[item.id], "English")
+//     };
+// });
 
 people.map((item) => {
-    item["Average Rates"] = {
-        Python: handleCalculateAverage(people[item.id], "Python"),
-        Cpp: handleCalculateAverage(people[item.id], "Cpp"),
-        JS: handleCalculateAverage(people[item.id], "JS"),
-        English: handleCalculateAverage(people[item.id], "English")
-    };
+    item["Average Rates"] = {};
+    skillsList.map((item2) => {
+        item["Average Rates"][item2] = handleCalculateAverage(item, item2);
+    });
 });
 
 function handleCalculateAverage(person, skill) {
@@ -93,7 +166,8 @@ function handleCalculateAverage(person, skill) {
     juryList.map((item2) => {
         average += person[item2][skill]
     });
-    return (average / skillsList.length);
+    
+    return ((Math.round((average / juryList.length) * 100)) / 100);
 }
 
 class Dashboard extends React.Component {
@@ -166,11 +240,12 @@ class Dashboard extends React.Component {
 
     handleCreateCurrentRates(currentCandidates, currentJury, currentSkill) {
         let table = [];
+        
         currentCandidates.map((item) => {
             let canItem = item;
             people.map((item2) => {
                 if (item2.name == canItem) {
-                    table.push(parseFloat(item2[currentJury][currentSkill]) * 20);
+                    table.push(parseFloat(item2[currentJury][currentSkill]) * multiplier);
                 }
             });
         });
@@ -370,7 +445,7 @@ class Dashboard extends React.Component {
                     <Row>
                         <Col md={8}>
                             <CustomChart
-                                className="custom-chart"
+                                className={`custom-chart`}
                                 currentCandidates={this.state.currentCandidates}
                                 currentJury={this.state.currentJury}
                                 currentSkill={this.state.currentSkill}
@@ -460,13 +535,19 @@ class PieChart extends React.Component {
     constructor(props) {
         super(props);
         this.currentAverageRates = [];
-        skillsList.map((item) => {
-            let average = 0;
-            juryList.map((item2) => {
-                average += this.props.currentPerson[item2][item]
-            });
-            this.currentAverageRates.push(average / skillsList.length);
+        this.currentPerson;
+        
+        people.map((item) => {
+            if(item.id == this.props.personId){
+                this.currentPerson = item;
+            }
         });
+        
+        skillsList.map((item) => {
+            console.log(this.currentPerson);
+            this.currentAverageRates.push(this.currentPerson["Average Rates"][item]*multiplier);
+        });
+
         this.state = {
             dataPie: {
                 labels: skillsList,
@@ -678,7 +759,7 @@ class Person extends React.Component {
                 <Row mt={4} className="show-content">
                     <Col>
                         <PieChart
-                            currentPerson={people[this.props.personId]}
+                            personId = {this.props.personId}
                         />
                     </Col>
                 </Row>
