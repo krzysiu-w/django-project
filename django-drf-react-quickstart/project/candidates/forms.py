@@ -8,10 +8,11 @@ class AddPerson(forms.Form):
 
 class AddSkills(forms.Form):
     allc = Person.objects.all()
-    # users = User.objects.all()
+    users = User.objects.all()
+    users = User.objects.filter(groups__name='recruters')
     l=[]
     for i in allc:
-        name = i.first_name+i.last_name
+        name = i.first_name+" "+i.last_name
         temp=[i.id, name]
         l.append(temp)
     cand = tuple(l)
@@ -23,13 +24,13 @@ class AddSkills(forms.Form):
         i+=1
     RANGE=tuple(l)
     l=[]
-    # for i in users:
-    #     temp=[i.id, i.username]
-    #     l.append(temp)
-    # rec = tuple(l)
-    rec = (['rec1', 'rec1'],['rec2', 'rec2'],['rec3', 'rec3'])
+    for i in users:
+        name = i.first_name+" "+i.last_name
+        temp=[i.id, name]
+        l.append(temp)
+    rec = tuple(l)
     recruter = forms.ChoiceField(label = 'Recruter', choices=rec, required=True)
-    person = forms.ChoiceField(label = 'Candidate', choices=cand, required=True)
+    # person = forms.ChoiceField(label = 'Candidate', choices=cand, required=True)
     python = forms.ChoiceField(label = 'python', choices=RANGE, required=True)
     cpp = forms.ChoiceField(label = 'C++', choices=RANGE, required=True)
     javascript = forms.ChoiceField(label = 'javascript', choices=RANGE, required=True)
