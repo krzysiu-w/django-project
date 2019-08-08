@@ -77,7 +77,7 @@ table {
     width: 100%;
     font-size: 25px;
     
-    background-color: #424242;
+    
 }
 
 td { 
@@ -91,7 +91,13 @@ td:last-child {
 }
 
 tr {
+    background-color: #424242;
     margin: 0 auto;
+}
+
+tr:hover {
+    background-color: #3d3d3d;
+    cursor: pointer;
 }
 
 h3 {
@@ -105,4 +111,11 @@ h3 {
     letter-spacing: 5px;
     color: black;
     margin-bottom: 0;
+}
+
+.delete{
+    color : rgb(255, 87, 87);
+}
+.delete:hover{
+    background-color: rgb(168, 32, 20);
 }

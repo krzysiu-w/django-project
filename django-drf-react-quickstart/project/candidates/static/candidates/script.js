@@ -7,7 +7,7 @@ let table = document.getElementById('list');
 
 for (let i = 0; i < candidates.length; i++) {
     var tr = document.createElement("tr");
-    tr.addEventListener('click', function(){window.location.assign('./skills/'+candidates[i].id)})
+    tr.addEventListener('click', function(){window.location.assign('./skills/'+candidates[i].id)}, true)
     table.appendChild(tr);
 
     for (x in candidates[i]) {
@@ -17,4 +17,9 @@ for (let i = 0; i < candidates.length; i++) {
             tr.appendChild(td);
         }
     }
+    var td = document.createElement("td");
+    td.classList.add("delete")
+    td.addEventListener('click', function(){window.location.assign('./delete/'+candidates[i].id)})
+    td.innerHTML = '<i class="far fa-trash-alt"></i>';
+    tr.appendChild(td);
 }

@@ -55,3 +55,11 @@ def get_skills(request, pk):
         person=Person.objects.get(id=pk)
         name = person.first_name+" "+person.last_name
     return render(request, 'addskills/index.html', {'form':form, 'person':name})
+
+def delete_person(request, pk):
+    if request.method == 'GET':
+        person = Person.objects.get(id=pk)
+        print(person)
+        person.delete()
+        print(person)
+    return HttpResponseRedirect('/candidates')

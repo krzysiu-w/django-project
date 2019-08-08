@@ -9,6 +9,7 @@ urlpatterns = [
     path('candidates/', views.get_name),
     path('candidates/list', views.candidatesList),
     path('candidates/skills/<int:pk>/', views.get_skills),
+    path('candidates/delete/<int:pk>/', views.delete_person),
     path('login/', auth_views.LoginView),
     # url(r'^login/$', auth_views.LoginView, {'template_name': 'logform/login.html'}),
     # url(r'^logout/$', auth_views.logout, name='logout'),
