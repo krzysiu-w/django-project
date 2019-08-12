@@ -19,10 +19,10 @@
       </nav>
 </header>
 <div class="content">
-    <form action="skills" method="post">
+    <form action="" method="post">
         {% csrf_token %}
         <div class='w50'>
-            <h3>SKILLS</h3>
+            <h3>{{ person }}</h3>
         {{ form }}
         <input type="submit" value="Submit" class="btn btn-warning">
         </div>

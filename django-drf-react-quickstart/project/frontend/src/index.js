@@ -13,33 +13,33 @@ let people = JSON.parse(jo);
 let skillsList = [];
 let candidates = [];
 let juryList = [];
-const multiplier = 10;
+const multiplier = 1;
 
 
 
 for (let i = 0; i < people.length; i++) {
-    if (people[i].skils) {
-    
-        people[i].skils = JSON.parse(people[i].skils);
-        
-        let temp = Object.getOwnPropertyNames(people[i].skils)
+    if (people[i].skills) {
+
+        people[i].skills = JSON.parse(people[i].skills);
+
+        let temp = Object.getOwnPropertyNames(people[i].skills)
         juryList = juryList.concat(temp)
         let x;
-        for (x in people[i].skils) {
-            
-            skillsList = skillsList.concat(Object.getOwnPropertyNames(people[i].skils[x]));
+        for (x in people[i].skills) {
+
+            skillsList = skillsList.concat(Object.getOwnPropertyNames(people[i].skills[x]));
             let y;
-            for(y in people[i].skils[x]){
-                people[i].skils[x][y] = parseInt(people[i].skils[x][y])
+            for (y in people[i].skills[x]) {
+                people[i].skills[x][y] = parseInt(people[i].skills[x][y])
             }
-            
+
         }
-        
-        people[i] = {...people[i], ...people[i].skils};
-        delete people[i].skils;
+
+        people[i] = { ...people[i], ...people[i].skills };
+        delete people[i].skills;
 
     }
-    else{
+    else {
         people[i] = undefined;
     }
 }
@@ -47,7 +47,7 @@ for (let i = 0; i < people.length; i++) {
 let tableOfPeople = [];
 let i = 0;
 people.map((item) => {
-    if(item){
+    if (item) {
         tableOfPeople[i] = item;
         i++;
     }
@@ -66,94 +66,6 @@ people.map((item, i) => {
 juryList = Array.from(new Set(juryList));
 skillsList = Array.from(new Set(skillsList));
 
-
-
-
-console.log(people, skillsList, juryList, candidates);
-
-// const juryList = ["Mariusz Max Kolonko", "Bogusław Łęcina", "Mistrz Shao Lin"];
-// const skillsList = ["Python", "Cpp", "JS", "English"];
-// const candidates = ["Tomek Makowski", "Niemy Michałek", "Uczeń Kamil Zdun"];
-
-// const people = [
-//     {
-//         "id": 0,
-//         "name": "Tomek Makowski",
-//         "Mariusz Max Kolonko": {
-//             "Python": 3,
-//             "Cpp": 2,
-//             "JS": 5,
-//             "English": 4
-//         },
-//         "Bogusław Łęcina": {
-//             "Python": 3,
-//             "Cpp": 3,
-//             "JS": 4,
-//             "English": 3
-//         },
-//         "Mistrz Shao Lin": {
-//             "Python": 1,
-//             "Cpp": 2,
-//             "JS": 3,
-//             "English": 3
-//         }
-//     },
-//     {
-//         "id": 1,
-//         "name": "Niemy Michałek",
-//         "Mariusz Max Kolonko": {
-//             "Python": 1,
-//             "Cpp": 2,
-//             "JS": 3,
-//             "English": 0
-//         },
-//         "Bogusław Łęcina": {
-//             "Python": 0,
-//             "Cpp": 0,
-//             "JS": 0,
-//             "English": 1
-//         },
-//         "Mistrz Shao Lin": {
-//             "Python": 1,
-//             "Cpp": 2,
-//             "JS": 2,
-//             "English": 3.5
-//         }
-//     },
-//     {
-//         "id": 2,
-//         "name": "Uczeń Kamil Zdun",
-//         "Mariusz Max Kolonko": {
-//             "Python": 1,
-//             "Cpp": 3,
-//             "JS": 0,
-//             "English": 4.5
-//         },
-//         "Bogusław Łęcina": {
-//             "Python": 2,
-//             "Cpp": 2,
-//             "JS": 1,
-//             "English": 5
-//         },
-//         "Mistrz Shao Lin": {
-//             "Python": 1,
-//             "Cpp": 2,
-//             "JS": 2,
-//             "English": 5
-//         }
-//     }
-// ]
-
-
-// people.map((item) => {
-//     item["Average Rates"] = {
-//         Python: handleCalculateAverage(people[item.id], "Python"),
-//         Cpp: handleCalculateAverage(people[item.id], "Cpp"),
-//         JS: handleCalculateAverage(people[item.id], "JS"),
-//         English: handleCalculateAverage(people[item.id], "English")
-//     };
-// });
-
 people.map((item) => {
     item["Average Rates"] = {};
     skillsList.map((item2) => {
@@ -166,7 +78,7 @@ function handleCalculateAverage(person, skill) {
     juryList.map((item2) => {
         average += person[item2][skill]
     });
-    
+
     return ((Math.round((average / juryList.length) * 100)) / 100);
 }
 
@@ -178,7 +90,21 @@ class Dashboard extends React.Component {
         this.handleMarkCandidate = this.handleMarkCandidate.bind(this);
         this.handleCreateCurrentRates = this.handleCreateCurrentRates.bind(this);
         this.handleSetAverage = this.handleSetAverage.bind(this);
+        this.handleSkillsWeight = this.handleSkillsWeight.bind(this);
+        this.handleResetSkillsWeight = this.handleResetSkillsWeight.bind(this);
+
         this.state = {
+            fullAverageRates: candidates.map((item, i) => {
+                let table = skillsList.map((item2) => people[i]["Average Rates"][item2] * multiplier * 1);
+                let sum = 0;
+                table.map((item) => {
+                    sum += item;
+                })
+                const number = 6;
+                sum = (Math.round((sum / number * 100))) / 10
+                return sum;
+            }),
+            skillsWeight: skillsList.map(() => 1),
             currentJury: "Average Rates",
             currentSkill: skillsList[0],
             currentCandidates: candidates,
@@ -234,13 +160,138 @@ class Dashboard extends React.Component {
                         }
                     ]
                 }
-            }
+            },
+            dataPies: candidates.map((item, i) => {
+                const dataPie = {
+                    labels: skillsList,
+                    datasets: [
+                        {
+                            data: skillsList.map((item2) => people[i]["Average Rates"][item2] * multiplier * 1),
+                            backgroundColor: [
+                                "#F7464A",
+                                "#46BFBD",
+                                "#FDB45C",
+                                "#949FB1",
+                                "#4D5360",
+                                "#AC64AD"
+                            ],
+                            hoverBackgroundColor: [
+                                "#FF5A5E",
+                                "#5AD3D1",
+                                "#FFC870",
+                                "#A8B3C5",
+                                "#616774",
+                                "#DA92DB"
+                            ]
+                        }
+                    ]
+                }
+                return dataPie;
+            })
         }
+    }
+
+    handleResetSkillsWeight() {
+        this.setState(() => {
+            return {
+                skillsWeight: skillsList.map(() => 1),
+                dataPies: candidates.map((item, i) => {
+                    const dataPie = {
+                        labels: skillsList,
+                        datasets: [
+                            {
+                                data: skillsList.map((item2, j) => people[i]["Average Rates"][item2] * multiplier * 1),
+                                backgroundColor: [
+                                    "#F7464A",
+                                    "#46BFBD",
+                                    "#FDB45C",
+                                    "#949FB1",
+                                    "#4D5360",
+                                    "#AC64AD"
+                                ],
+                                hoverBackgroundColor: [
+                                    "#FF5A5E",
+                                    "#5AD3D1",
+                                    "#FFC870",
+                                    "#A8B3C5",
+                                    "#616774",
+                                    "#DA92DB"
+                                ]
+                            }
+                        ]
+                    }
+                    return dataPie;
+                }),
+                fullAverageRates: candidates.map((item, i) => {
+                    let table = skillsList.map((item2) => people[i]["Average Rates"][item2] * multiplier * 1);
+                    let sum = 0;
+                    table.map((item) => {
+                        sum += item;
+                    })
+                    const number = 6;
+                    sum = (Math.round((sum / number * 100))) / 10
+                    return sum;
+                })
+            };
+        })
+    }
+
+    handleSkillsWeight(weight, index) {
+        let newTable = this.state.skillsWeight.map(x => x);
+        newTable[index] = weight;
+        this.setState(() => {
+            return {
+                skillsWeight: newTable,
+                dataPies: candidates.map((item, i) => {
+                    const dataPie = {
+                        labels: skillsList,
+                        datasets: [
+                            {
+                                data: skillsList.map((item2, j) => people[i]["Average Rates"][item2] * multiplier * newTable[j]),
+                                backgroundColor: [
+                                    "#F7464A",
+                                    "#46BFBD",
+                                    "#FDB45C",
+                                    "#949FB1",
+                                    "#4D5360",
+                                    "#AC64AD"
+                                ],
+                                hoverBackgroundColor: [
+                                    "#FF5A5E",
+                                    "#5AD3D1",
+                                    "#FFC870",
+                                    "#A8B3C5",
+                                    "#616774",
+                                    "#DA92DB"
+                                ]
+                            }
+                        ]
+                    }
+                    return dataPie;
+                }),
+                fullAverageRates: candidates.map((item, i) => {
+                    let table = skillsList.map((item2, j) => people[i]["Average Rates"][item2] * multiplier * newTable[j]);
+                    let sum = 0;
+
+                    table.map((item) => {
+                        sum += item;
+                    });
+
+                    let number = 0;
+                    newTable.map((item) => {
+                        number += item;
+                    });
+
+                    sum = (Math.round((sum / number * 100))) / 10
+                    return sum;
+                })
+            };
+        });
     }
 
     handleCreateCurrentRates(currentCandidates, currentJury, currentSkill) {
         let table = [];
-        
+
         currentCandidates.map((item) => {
             let canItem = item;
             people.map((item2) => {
@@ -320,6 +371,8 @@ class Dashboard extends React.Component {
             };
         });
     }
+
+
     handleMarkCandidate(candidate) {
         if (this.state.currentCandidates.indexOf(candidate) > -1) {
             let newTable = [];
@@ -402,7 +455,6 @@ class Dashboard extends React.Component {
         } this.props.currentRates
     }
     handleSetAverage() {
-        console.log("click");
         this.setState((prev) => {
             return {
                 currentJury: "Average Rates",
@@ -441,7 +493,6 @@ class Dashboard extends React.Component {
             <div>
                 <CustomNavbar />
                 <div className="dashboard">
-
                     <Row>
                         <Col md={8}>
                             <CustomChart
@@ -473,6 +524,9 @@ class Dashboard extends React.Component {
                                         currentJury={this.state.currentJury}
                                         handleMarkCandidate={this.handleMarkCandidate}
                                         currentCandidates={this.state.currentCandidates}
+                                        skillsWeight={this.state.skillsWeight}
+                                        dataPies={this.state.dataPies}
+                                        fullAverageRates={this.state.fullAverageRates}
                                     />
                                 </Col>
                             </Row>
@@ -482,6 +536,9 @@ class Dashboard extends React.Component {
                                         className="skills"
                                         currentSkill={this.state.currentSkill}
                                         handleChangeSkill={this.handleChangeSkill}
+                                        handleSkillsWeight={this.handleSkillsWeight}
+                                        skillsWeight={this.state.skillsWeight}
+                                        handleResetSkillsWeight={this.handleResetSkillsWeight}
                                     />
                                 </Col>
                             </Row>
@@ -503,7 +560,7 @@ class CustomChart extends React.Component {
     }
     render() {
         return (
-            <div className={this.props.className}>
+            <div className={`${this.props.className} position-fixed w-50`}>
                 <BarChart
                     currentCandidates={this.props.currentCandidates}
                     currentSkill={this.props.currentSkill}
@@ -534,53 +591,12 @@ class BarChart extends React.Component {
 class PieChart extends React.Component {
     constructor(props) {
         super(props);
-        this.currentAverageRates = [];
-        this.currentPerson;
-        
-        people.map((item) => {
-            if(item.id == this.props.personId){
-                this.currentPerson = item;
-            }
-        });
-        
-        skillsList.map((item) => {
-            console.log(this.currentPerson);
-            this.currentAverageRates.push(this.currentPerson["Average Rates"][item]*multiplier);
-        });
-
-        this.state = {
-            dataPie: {
-                labels: skillsList,
-                datasets: [
-                    {
-                        data: this.currentAverageRates,
-                        backgroundColor: [
-                            "#F7464A",
-                            "#46BFBD",
-                            "#FDB45C",
-                            "#949FB1",
-                            "#4D5360",
-                            "#AC64AD"
-                        ],
-                        hoverBackgroundColor: [
-                            "#FF5A5E",
-                            "#5AD3D1",
-                            "#FFC870",
-                            "#A8B3C5",
-                            "#616774",
-                            "#DA92DB"
-                        ]
-                    }
-                ]
-            }
-        }
     }
-
 
     render() {
         return (
             <div>
-                <Pie data={this.state.dataPie} options={{ responsive: true }} />
+                <Pie data={this.props.dataPie} options={{ responsive: true }} />
             </div>
 
 
@@ -592,16 +608,30 @@ class Skills extends React.Component {
     constructor(props) {
         super(props);
         this.handleChangeSkill = this.handleChangeSkill.bind(this);
+        this.handleSkillsWeight = this.handleSkillsWeight.bind(this);
         this.state = {
         };
     }
     handleChangeSkill(skill) {
         this.props.handleChangeSkill(skill);
     }
+    handleSkillsWeight(weight, skillName) {
+        this.props.handleSkillsWeight(weight, skillName);
+    }
+
     render() {
         return (
             <div className={this.props.className}>
-                <h2 className="custom-title">Skills</h2>
+                <h2 className="custom-title">
+                    Skills
+                    <Button
+                        variant="warning"
+                        className="box-shadow-1 float-right mr-3"
+                        onClick={this.props.handleResetSkillsWeight}
+                    >
+                        Reset
+                    </Button>
+                </h2>
                 <ul className="personSkills">
                     {skillsList.map((item, i) =>
                         <Skill
@@ -609,7 +639,11 @@ class Skills extends React.Component {
                             skillName={item}
                             handleChangeSkill={this.handleChangeSkill}
                             isActive={this.props.currentSkill == item ? "active" : ""}
-                        />)}
+                            weight={this.props.skillsWeight[i]}
+                            handleSkillsWeight={this.handleSkillsWeight}
+                            index={i}
+                        />)
+                    }
                 </ul>
             </div>
         );
@@ -620,11 +654,24 @@ class Skill extends React.Component {
     constructor(props) {
         super(props);
         this.handleChangeSkill = this.handleChangeSkill.bind(this);
+        this.handleAddWeight = this.handleAddWeight.bind(this);
+        this.handleMinusWeight = this.handleMinusWeight.bind(this);
         this.state = {
         }
     }
     handleChangeSkill() {
         this.props.handleChangeSkill(this.props.skillName);
+    }
+    handleAddWeight() {
+        if(this.props.weight < 50){
+            this.props.handleSkillsWeight(this.props.weight + 1, this.props.index);
+        }
+        
+    }
+    handleMinusWeight() {
+        if (this.props.weight > 1) {
+            this.props.handleSkillsWeight(this.props.weight - 1, this.props.index);
+        }
     }
     render() {
         return (
@@ -633,7 +680,21 @@ class Skill extends React.Component {
                 className={`person-skill ${this.props.isActive}`}
                 onClick={this.handleChangeSkill}
             >
-                {this.props.skillName}
+                <span>
+                    {this.props.skillName}
+                </span>
+
+                <span className="float-right wieghts">
+                    <span onClick={this.handleMinusWeight}>
+                        <i className="fas fa-minus-square"></i>
+                    </span>
+                    <span className={`ml-2`}>
+                        {this.props.weight}
+                    </span>
+                    <span onClick={this.handleAddWeight}>
+                        <i className="fas fa-plus-square"></i>
+                    </span>
+                </span>
             </li>
         );
     }
@@ -656,7 +717,9 @@ class Jury extends React.Component {
                         variant="warning"
                         className="box-shadow-1 float-right mr-3"
                         onClick={this.props.handleSetAverage}
-                    >Average</Button>
+                    >
+                        Average
+                    </Button>
                 </h2>
                 <ul>
                     {juryList.map((item, i) =>
@@ -715,6 +778,9 @@ class People extends React.Component {
                             currentJury={this.props.currentJury}
                             handleMarkCandidate={this.handleMarkCandidate}
                             isActive={this.props.currentCandidates.indexOf(item.name) > -1 ? "active" : ""}
+                            skillsWeight={this.props.skillsWeight}
+                            dataPie={this.props.dataPies[i]}
+                            fullAverageRate={this.props.fullAverageRates[i]}
                         />
                     )}
                 </ul>
@@ -729,7 +795,10 @@ class Person extends React.Component {
         this.handleMarkCandidate = this.handleMarkCandidate.bind(this);
         this.handleShowDetails = this.handleShowDetails.bind(this);
         this.state = {
-            drop: false
+            drop: false,
+            style: {
+                width: "50%"
+            }
         }
     }
     handleMarkCandidate() {
@@ -745,21 +814,39 @@ class Person extends React.Component {
     render() {
         return (
             <li className="person">
-                <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
-                <span className="personName">{this.props.personName}</span>
-                <span className="personRate">
-                    <span
-                        className="drop-down"
-                        onClick={this.handleShowDetails}
-                    >
-                        {this.state.drop ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i>}
-                    </span>
-                </span>
+                <Row>
+                    <Col lg={8}>
+                        <Row>
+                            <Col lg={1} md={1} sm={1}>
+                                <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
+                            </Col>
+                            <Col>
+                                <span className="personName">{this.props.personName}</span>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col lg={4} className="overflow-auto">
+                        <span className="personRate">
+                            <span
+                                className={`drop-down`}
+                                onClick={this.handleShowDetails}
+                            >
+                                {this.state.drop ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i>}
+                            </span>
+                        </span>
+                        <span className="hole-rate">
+                            <span style={{width: `${this.props.fullAverageRate}%`}}></span>
+                            <span className="text">{`${this.props.fullAverageRate}%`}</span>
+                        </span>
+                    </Col>
+                </Row>
 
                 <Row mt={4} className="show-content">
                     <Col>
                         <PieChart
-                            personId = {this.props.personId}
+                            personId={this.props.personId}
+                            skillsWeight={this.props.skillsWeight}
+                            dataPie={this.props.dataPie}
                         />
                     </Col>
                 </Row>
