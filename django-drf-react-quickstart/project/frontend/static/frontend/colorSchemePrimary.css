@@ -56,13 +56,13 @@ nav {
 }
 
 .hole-rate > span{
-    background-color: #0685c0;
+    background-color: #ffbf00;
 }
 
 .wieghts i{
     color: #ffbf00;
 }
 
-.hole-rate > span > span {
+span.text{
     color: #fff;
 }

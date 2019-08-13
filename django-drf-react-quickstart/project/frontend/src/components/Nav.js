@@ -6,7 +6,7 @@ class CustomNavbar extends React.Component {
     return (
       <header>
         <Navbar expand="lg" className="mb-1">
-          <Navbar.Brand href="http://127.0.0.1:8000/frontend/" className="mt-2">Your Future Best Worker</Navbar.Brand>
+          <Navbar.Brand href="http://127.0.0.1:8000/" className="mt-2">Your Future Best Worker</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">

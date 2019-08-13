@@ -815,7 +815,7 @@ class Person extends React.Component {
         return (
             <li className="person">
                 <Row>
-                    <Col lg={8}>
+                    <Col lg={7}>
                         <Row>
                             <Col lg={1} md={1} sm={1}>
                                 <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
@@ -825,7 +825,7 @@ class Person extends React.Component {
                             </Col>
                         </Row>
                     </Col>
-                    <Col lg={4} className="overflow-auto">
+                    <Col lg={5} className="overflow-auto">
                         <span className="personRate">
                             <span
                                 className={`drop-down`}
@@ -835,9 +835,9 @@ class Person extends React.Component {
                             </span>
                         </span>
                         <span className="hole-rate">
-                            <span style={{width: `${this.props.fullAverageRate}%`}}></span>
-                            <span className="text">{`${this.props.fullAverageRate}%`}</span>
+                            <span style={{width: `${this.props.fullAverageRate}%`}}></span>    
                         </span>
+                        <span className="text">{`${this.props.fullAverageRate}%`}</span>
                     </Col>
                 </Row>
 
