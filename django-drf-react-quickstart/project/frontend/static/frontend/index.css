@@ -13,9 +13,6 @@
     }
 }
 
-body{
-}
-
 html{
     overflow-y: auto;
 }
@@ -42,6 +39,10 @@ ul > li {
     text-indent: 10px;
 }
 
+.custom-chart{
+    width: 30%;
+    transform: translateX(-10%);
+}
 
 .person-skill{
     cursor: pointer;
@@ -68,9 +69,8 @@ ul > li {
 }
 
 .personId{
-    position: relative;
+    position: absolute;
     cursor: pointer;
-    float: left;
     width: 20px;
     height: 20px;
     display: block;
@@ -101,30 +101,23 @@ ul > li {
 }
 
 .hole-rate{
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     margin: 0;
-    float: right;
+    float: left;
     height: 20px;
     display: block;
     position: relative;
-    transform: translateX(-40px);
 }
 
-.hole-rate > span{
+.hole-rate > div{
     height: 100%;
     position: absolute;
-    top: 50%;
     right: 0;
-    transform: translate(0, -50%);
-    text-align: right;
-    float: right;
-    font-weight: 900;
-    font-size: 14px;
 }
 
 span.text{
     position: absolute;
-    right: 45px;
+    right: 15px;
     font-size: 12px;
 }
 
@@ -132,11 +125,46 @@ span.text{
     cursor: pointer;
 }
 
-nav {
-    background-color: #ffbf00 !important;
-    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, .22), 0 25px 55px 0 rgba(0, 0, 0, .21);
+.check{
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 2px 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    user-select: none;
 }
 
+.btnn {
+    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, .22), 0 25px 55px 0 rgba(0, 0, 0, .21) !important;
+    padding: .40rem 1.10rem;
+    font-size: .81rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin: .375rem;
+    border: 0;
+    border-radius: .125rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    white-space: normal;
+    word-wrap: break-word;
+    color: inherit;
+}
+
+.btnn-warning {
+    color: #212529;
+    background-color: #ffbf00;
+    border-color: #ffbf00;
+}
+
+nav {
+    background-color: #ffbf00 !important;
+    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
+}
 .nav-link {
     font-size: 18px;
+}
+
+.navbar-brand {
+    margin-bottom: 0 !important;
+    min-height: 0 !important;
+    padding-top: 0;
 }

@@ -15,6 +15,8 @@ let candidates = [];
 let juryList = [];
 const multiplier = 1;
 
+console.log(people);
+
 
 
 for (let i = 0; i < people.length; i++) {
@@ -92,6 +94,7 @@ class Dashboard extends React.Component {
         this.handleSetAverage = this.handleSetAverage.bind(this);
         this.handleSkillsWeight = this.handleSkillsWeight.bind(this);
         this.handleResetSkillsWeight = this.handleResetSkillsWeight.bind(this);
+        this.handleCheckCandidate = this.handleCheckCandidate.bind(this);
 
         this.state = {
             fullAverageRates: candidates.map((item, i) => {
@@ -107,8 +110,35 @@ class Dashboard extends React.Component {
             skillsWeight: skillsList.map(() => 1),
             currentJury: "Average Rates",
             currentSkill: skillsList[0],
+            currentCandidate: candidates[0],
             currentCandidates: candidates,
             currentRates: this.handleCreateCurrentRates(candidates, "Average Rates", skillsList[0]),
+            dataBar2: {
+                labels: juryList,
+                datasets: [
+                    {
+                        label: skillsList[0],
+                        data: juryList.map((item) => people[0][item][skillsList[0]]),
+                        backgroundColor: [
+                            "rgba(255, 134,159,0.4)",
+                            "rgba(98,  182, 239,0.4)",
+                            "rgba(255, 218, 128,0.4)",
+                            "rgba(113, 205, 205,0.4)",
+                            "rgba(170, 128, 252,0.4)",
+                            "rgba(255, 177, 101,0.4)"
+                        ],
+                        borderWidth: 2,
+                        borderColor: [
+                            "rgba(255, 134, 159, 1)",
+                            "rgba(98,  182, 239, 1)",
+                            "rgba(255, 218, 128, 1)",
+                            "rgba(113, 205, 205, 1)",
+                            "rgba(170, 128, 252, 1)",
+                            "rgba(255, 177, 101, 1)"
+                        ]
+                    }
+                ]
+            },
             dataBar: {
                 labels: candidates,
                 datasets: [
@@ -189,6 +219,41 @@ class Dashboard extends React.Component {
                 return dataPie;
             })
         }
+    }
+
+    handleCheckCandidate(index) {
+        console.log(people[index]);
+        this.setState((prev) => {
+            return {
+                currentCandidate: people[index].name,
+                dataBar2: {
+                    labels: juryList,
+                    datasets: [
+                        {
+                            label: prev.currentSkill,
+                            data: juryList.map((item) => people[index][item][prev.currentSkill]),
+                            backgroundColor: [
+                                "rgba(255, 134,159,0.4)",
+                                "rgba(98,  182, 239,0.4)",
+                                "rgba(255, 218, 128,0.4)",
+                                "rgba(113, 205, 205,0.4)",
+                                "rgba(170, 128, 252,0.4)",
+                                "rgba(255, 177, 101,0.4)"
+                            ],
+                            borderWidth: 2,
+                            borderColor: [
+                                "rgba(255, 134, 159, 1)",
+                                "rgba(98,  182, 239, 1)",
+                                "rgba(255, 218, 128, 1)",
+                                "rgba(113, 205, 205, 1)",
+                                "rgba(170, 128, 252, 1)",
+                                "rgba(255, 177, 101, 1)"
+                            ]
+                        }
+                    ]
+                }
+            };
+        });
     }
 
     handleResetSkillsWeight() {
@@ -304,7 +369,14 @@ class Dashboard extends React.Component {
     }
 
     handleChangeSkill(skill) {
+
         this.setState((prev) => {
+            let table = [];
+            people.map((item) => {
+                if (item.name == prev.currentCandidate) {
+                    table = juryList.map((item2) => item[item2][skill]);
+                }
+            });
             return {
                 currentSkill: skill,
                 currentRates: this.handleCreateCurrentRates(prev.currentCandidates, prev.currentJury, skill),
@@ -314,6 +386,32 @@ class Dashboard extends React.Component {
                         {
                             label: skill,
                             data: this.handleCreateCurrentRates(prev.currentCandidates, prev.currentJury, skill),
+                            backgroundColor: [
+                                "rgba(255, 134,159,0.4)",
+                                "rgba(98,  182, 239,0.4)",
+                                "rgba(255, 218, 128,0.4)",
+                                "rgba(113, 205, 205,0.4)",
+                                "rgba(170, 128, 252,0.4)",
+                                "rgba(255, 177, 101,0.4)"
+                            ],
+                            borderWidth: 2,
+                            borderColor: [
+                                "rgba(255, 134, 159, 1)",
+                                "rgba(98,  182, 239, 1)",
+                                "rgba(255, 218, 128, 1)",
+                                "rgba(113, 205, 205, 1)",
+                                "rgba(170, 128, 252, 1)",
+                                "rgba(255, 177, 101, 1)"
+                            ]
+                        }
+                    ]
+                },
+                dataBar2: {
+                    labels: juryList,
+                    datasets: [
+                        {
+                            label: skill,
+                            data: table,
                             backgroundColor: [
                                 "rgba(255, 134,159,0.4)",
                                 "rgba(98,  182, 239,0.4)",
@@ -491,21 +589,25 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div>
-                <CustomNavbar />
                 <div className="dashboard">
                     <Row>
-                        <Col md={8}>
+                        <Col md={5}>
                             <CustomChart
                                 className={`custom-chart`}
-                                currentCandidates={this.state.currentCandidates}
                                 currentJury={this.state.currentJury}
-                                currentSkill={this.state.currentSkill}
-                                currentRates={this.state.currentRates}
                                 dataBar={this.state.dataBar}
                                 barChartOptions={this.state.barChartOptions}
                             />
                         </Col>
-                        <Col md={4}>
+                        <Col>
+                            <CustomChart
+                                className={`custom-chart`}
+                                currentJury={this.state.currentCandidate}
+                                dataBar={this.state.dataBar2}
+                                barChartOptions={this.state.barChartOptions}
+                            />
+                        </Col>
+                        <Col md={3}>
                             <Row>
                                 <Col>
                                     <Jury
@@ -520,6 +622,7 @@ class Dashboard extends React.Component {
                                 <Col>
                                     <People
                                         className="people"
+                                        currentCandidate={this.state.currentCandidate}
                                         currentSkill={this.state.currentSkill}
                                         currentJury={this.state.currentJury}
                                         handleMarkCandidate={this.handleMarkCandidate}
@@ -527,6 +630,7 @@ class Dashboard extends React.Component {
                                         skillsWeight={this.state.skillsWeight}
                                         dataPies={this.state.dataPies}
                                         fullAverageRates={this.state.fullAverageRates}
+                                        handleCheckCandidate={this.handleCheckCandidate}
                                     />
                                 </Col>
                             </Row>
@@ -560,12 +664,9 @@ class CustomChart extends React.Component {
     }
     render() {
         return (
-            <div className={`${this.props.className} position-fixed w-50`}>
+            <div className={`${this.props.className} position-fixed`}>
                 <BarChart
-                    currentCandidates={this.props.currentCandidates}
-                    currentSkill={this.props.currentSkill}
                     currentJury={this.props.currentJury}
-                    currentRates={this.props.currentRates}
                     dataBar={this.props.dataBar}
                     barChartOptions={this.props.barChartOptions}
                 />
@@ -663,10 +764,10 @@ class Skill extends React.Component {
         this.props.handleChangeSkill(this.props.skillName);
     }
     handleAddWeight() {
-        if(this.props.weight < 50){
+        if (this.props.weight < 50) {
             this.props.handleSkillsWeight(this.props.weight + 1, this.props.index);
         }
-        
+
     }
     handleMinusWeight() {
         if (this.props.weight > 1) {
@@ -772,8 +873,10 @@ class People extends React.Component {
                     {people.map((item, i) =>
                         <Person
                             key={`person${i}`}
+                            ID={i}
                             personId={item.id}
                             personName={item.name}
+                            currentCandidate={this.props.currentCandidate}
                             currentRate={item[this.props.currentJury][this.props.currentSkill]}
                             currentJury={this.props.currentJury}
                             handleMarkCandidate={this.handleMarkCandidate}
@@ -781,6 +884,7 @@ class People extends React.Component {
                             skillsWeight={this.props.skillsWeight}
                             dataPie={this.props.dataPies[i]}
                             fullAverageRate={this.props.fullAverageRates[i]}
+                            handleCheckCandidate={this.props.handleCheckCandidate}
                         />
                     )}
                 </ul>
@@ -794,6 +898,7 @@ class Person extends React.Component {
         super(props);
         this.handleMarkCandidate = this.handleMarkCandidate.bind(this);
         this.handleShowDetails = this.handleShowDetails.bind(this);
+        this.handleCheckCandidate = this.handleCheckCandidate.bind(this);
         this.state = {
             drop: false,
             style: {
@@ -811,21 +916,36 @@ class Person extends React.Component {
             };
         });
     }
+    handleCheckCandidate() {
+        this.props.handleCheckCandidate(this.props.ID);
+    }
     render() {
         return (
             <li className="person">
                 <Row>
-                    <Col lg={7}>
+                    <Col lg={1}>
+                        <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
+                    </Col>
+                    <Col lg={10}>
                         <Row>
-                            <Col lg={1} md={1} sm={1}>
-                                <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
-                            </Col>
                             <Col>
                                 <span className="personName">{this.props.personName}</span>
+                                <span
+                                    className={`check box-shadow-1`}
+                                    onClick={this.handleCheckCandidate}
+                                >check</span>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <div className="hole-rate">
+                                    <div style={{ width: `${this.props.fullAverageRate}%` }}></div>
+                                </div>
+                                <span className="text">{`${this.props.fullAverageRate}%`}</span>
                             </Col>
                         </Row>
                     </Col>
-                    <Col lg={5} className="overflow-auto">
+                    <Col lg={1}>
                         <span className="personRate">
                             <span
                                 className={`drop-down`}
@@ -834,13 +954,8 @@ class Person extends React.Component {
                                 {this.state.drop ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i>}
                             </span>
                         </span>
-                        <span className="hole-rate">
-                            <span style={{width: `${this.props.fullAverageRate}%`}}></span>    
-                        </span>
-                        <span className="text">{`${this.props.fullAverageRate}%`}</span>
                     </Col>
                 </Row>
-
                 <Row mt={4} className="show-content">
                     <Col>
                         <PieChart
