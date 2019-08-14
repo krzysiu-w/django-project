@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 import json
 from .models import Person
-from .serializers import SkillsSerializer
+
 from .forms import AddPerson, AddSkills
 from django.contrib.auth.models import User
 
@@ -21,13 +21,7 @@ def get_name(request):
         data=json.dumps(list(data))
     return render(request, 'addperson/index.html', {'form':form, 'data':data})
 
-def candidatesList(request):
-    if request.method == 'GET':
-        c = Person.objects.values('id', 'first_name', 'last_name', 'skills')
-        c=json.dumps(list(c))
-        # c=json.loads(c)
-        # c=c+request.user.id
-        return render(request, 'list/index.html', {"list" : c})
+
 
 def get_skills(request, pk):
     if request.method == 'POST':

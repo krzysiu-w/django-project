@@ -30,7 +30,6 @@ class AddSkills(forms.Form):
         l.append(temp)
     rec = tuple(l)
     recruter = forms.ChoiceField(label = 'Recruter', choices=rec, required=True)
-    # person = forms.ChoiceField(label = 'Candidate', choices=cand, required=True)
     python = forms.ChoiceField(label = 'python', choices=RANGE, required=True)
     cpp = forms.ChoiceField(label = 'C++', choices=RANGE, required=True)
     javascript = forms.ChoiceField(label = 'javascript', choices=RANGE, required=True)
