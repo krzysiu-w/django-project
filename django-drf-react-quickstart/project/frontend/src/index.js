@@ -589,7 +589,6 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div>
-                <CustomNavbar />
                 <div className="dashboard">
                     <Row>
                         <Col md={5}>
