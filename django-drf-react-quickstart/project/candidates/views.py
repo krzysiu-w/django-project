@@ -38,8 +38,7 @@ def get_skills(request, pk):
             for i in form.fields:
                 if i!='person' and i!='recruter':
                     temp.update({i: request.POST.get(i)})
-            recname=User.objects.get(id=request.POST.get('recruter'))
-            recname=recname.first_name+" "+recname.last_name
+            recname=request.user.id
             skills[recname]=temp
             person.skills=json.dumps(skills)
             person.save()
