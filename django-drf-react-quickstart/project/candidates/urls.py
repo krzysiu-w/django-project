@@ -10,6 +10,7 @@ urlpatterns = [
     path('candidates/skills/<int:pk>/', views.get_skills),
     path('candidates/delete/<int:pk>/', views.delete_person),
     path('', include('django.contrib.auth.urls')),
+    path('logoutuser', views.logout_user),
 ]
 
 

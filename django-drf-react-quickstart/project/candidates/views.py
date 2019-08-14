@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 import json
 from .models import Person
-
+from django.contrib.auth import logout
 from .forms import AddPerson, AddSkills
 from django.contrib.auth.models import User
 
@@ -21,6 +21,10 @@ def get_name(request):
         data=json.dumps(list(data))
     return render(request, 'addperson/index.html', {'form':form, 'data':data})
 
+def logout_user(request):
+        if request.method == 'GET':
+            logout(request)
+        return HttpResponseRedirect('/candidates')
 
 
 def get_skills(request, pk):
