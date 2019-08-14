@@ -9,17 +9,19 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
   <link rel="stylesheet" href="{% static "frontend/index.css" %}">
   <link rel="stylesheet" href="{% static "frontend/colorSchemePrimary.css" %}">
-  <title>Django DRF - React : Quickstart - Valentino G. - www.valentinog.com</title>
+  <title>Dashboard</title>
 </head>
 <body>
   <input id="data" style="display: none;" value="{{ data }}" />
+  <input id="recruters" style="display: none;" value="{{ recruters }}" />
           <div id="root"><!-- React --></div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{% static "frontend/main.js" %}"></script>
 <script>
+  $(".drop-down").parents(".person").find(".show-content").slideToggle(0);
   $(".drop-down").on("click", function() {
-    $(this).parents(".person").find(".show-content").slideToggle(0);
+    $(this).parents(".person").find(".show-content").stop().slideToggle(200);
   });
   
 </script>

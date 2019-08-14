@@ -100,10 +100,6 @@ ul > li {
     float: right;
 }
 
-.show-content{
-    display: none;
-}
-
 .hole-rate{
     width: calc(100% - 60px);
     margin: 0;

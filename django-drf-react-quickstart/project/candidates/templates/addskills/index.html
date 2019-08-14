@@ -2,23 +2,24 @@
 {% load static %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static "skills/index.css" %}">
-
+<title>Rate {{person}}</title>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light py-3">
-        <a class="navbar-brand mb-1" href="../../">Your Future Best Worker</a>
+        <a class="navbar-brand mb-1" href="../../../">Your Future Best Worker</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="../../../../../">Home</a>
+            <a class="nav-item nav-link" href="../../../../../..">Home</a>
             <a class="nav-item nav-link" href="../../../candidates/">Candidates</a>
+            <div class="nav-link" >Hi {{ user.first_name }} {{ user.last_name }}</div>
           </div>
         </div>
       </nav>
 </header>
 <div class="content">
-    <form action="" method="post">
+    <form  method="post">
         {% csrf_token %}
         <div class='w50'>
             <h3>{{ person }}</h3>
