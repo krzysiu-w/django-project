@@ -131,3 +131,12 @@ span.text{
 .wieghts i{
     cursor: pointer;
 }
+
+nav {
+    background-color: #ffbf00 !important;
+    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, .22), 0 25px 55px 0 rgba(0, 0, 0, .21);
+}
+
+.nav-link {
+    font-size: 18px;
+}

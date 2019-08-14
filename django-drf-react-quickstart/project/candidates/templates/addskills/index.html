@@ -5,17 +5,21 @@
 <title>Rate {{person}}</title>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light py-3">
-        <a class="navbar-brand mb-1" href="../../../">Your Future Best Worker</a>
+        <a class="navbar-brand mb-1" href="/">Your Future Best Worker</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="../../../../../..">Home</a>
-            <a class="nav-item nav-link" href="../../../candidates/">Candidates</a>
-            <div class="nav-link" >Hi {{ user.first_name }} {{ user.last_name }}</div>
+            <a class="nav-item nav-link" href="/">Home</a>
+            <a class="nav-item nav-link" href="/candidates/">Candidates</a>
           </div>
         </div>
+        {% if user.is_authenticated %}
+                <span class="align-items-end" style="color: black;">Hi {{user.first_name}}{{user.last_name}}<a class="btn btn-outline-white my-2 my-sm-0 ml-3" style="width: auto;" href="/logoutuser">Log out</a></span>
+              {% else %}
+              <a class="btn btn-outline-white my-2 my-sm-0 ml-3" style="width: auto; color: black;" href="/login">Log in</a>
+              {% endif %}
       </nav>
 </header>
 <div class="content">

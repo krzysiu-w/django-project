@@ -12,6 +12,26 @@
   <title>Dashboard</title>
 </head>
 <body>
+<header>
+      
+      <nav class="navbar navbar-expand-lg navbar-light py-3">
+          <a class="navbar-brand mb-1" href="../../">Your Future Best Worker</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-item nav-link" href="/candidates">Candidates</a>
+            </div>   
+          </div>
+          {% if user.is_authenticated %}
+                <span style="color: black;">Hi {{user.first_name}}{{user.last_name}}<a class="btn btn-outline-white my-2 my-sm-0 ml-3" href="/logoutuser">Log out</a></span>
+              {% else %}
+              <a class="btn btn-outline-white my-2 my-sm-0 ml-3" style="color: black;" href="/login">Log in</a>
+              {% endif %}
+      </nav>
+  </header>
   <input id="data" style="display: none;" value="{{ data }}" />
   <input id="recruters" style="display: none;" value="{{ recruters }}" />
           <div id="root"><!-- React --></div>
