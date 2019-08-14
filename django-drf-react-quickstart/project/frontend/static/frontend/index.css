@@ -13,9 +13,6 @@
     }
 }
 
-body{
-}
-
 html{
     overflow-y: auto;
 }
@@ -42,6 +39,10 @@ ul > li {
     text-indent: 10px;
 }
 
+.custom-chart{
+    width: 30%;
+    transform: translateX(-10%);
+}
 
 .person-skill{
     cursor: pointer;
@@ -68,9 +69,8 @@ ul > li {
 }
 
 .personId{
-    position: relative;
+    position: absolute;
     cursor: pointer;
-    float: left;
     width: 20px;
     height: 20px;
     display: block;
@@ -100,38 +100,36 @@ ul > li {
     float: right;
 }
 
-.show-content{
-    display: none;
-}
-
 .hole-rate{
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     margin: 0;
-    float: right;
+    float: left;
     height: 20px;
     display: block;
     position: relative;
-    transform: translateX(-40px);
 }
 
-.hole-rate > span{
+.hole-rate > div{
     height: 100%;
     position: absolute;
-    top: 50%;
     right: 0;
-    transform: translate(0, -50%);
-    text-align: right;
-    float: right;
-    font-weight: 900;
-    font-size: 14px;
 }
 
 span.text{
     position: absolute;
-    right: 45px;
+    right: 15px;
     font-size: 12px;
 }
 
 .wieghts i{
     cursor: pointer;
+}
+
+.check{
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 2px 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    user-select: none;
 }

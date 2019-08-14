@@ -55,7 +55,7 @@ nav {
     border: #303030 solid 3px;
 }
 
-.hole-rate > span{
+.hole-rate > div{
     background-color: #ffbf00;
 }
 
@@ -65,4 +65,9 @@ nav {
 
 span.text{
     color: #fff;
+}
+
+.check{
+    background-color: #ffbf00;
+    color: #000;
 }

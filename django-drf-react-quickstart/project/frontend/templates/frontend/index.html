@@ -18,8 +18,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{% static "frontend/main.js" %}"></script>
 <script>
+  $(".drop-down").parents(".person").find(".show-content").slideToggle(0);
   $(".drop-down").on("click", function() {
-    $(this).parents(".person").find(".show-content").slideToggle(0);
+    $(this).parents(".person").find(".show-content").stop().slideToggle(200);
   });
   
 </script>
