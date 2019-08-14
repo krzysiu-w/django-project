@@ -25,6 +25,8 @@
       </nav>
   </header>
 
+
+{% if user.is_authenticated%}
   <div class="content">
       <form action="" method="post">
       {% csrf_token %}
@@ -38,6 +40,10 @@
 
     </table>
   </div>
+{% else %}
+<h1>You have no permision to be here.</h1>
+{% endif %}
+
   <input style="display: none;" id="data" value="{{data}}">
   <script src="{% static 'candidates/script.js' %}"></script>
 </body>
