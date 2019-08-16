@@ -119,3 +119,11 @@ h3 {
 .delete:hover{
     background-color: rgb(168, 32, 20);
 }
+
+h1 {
+    color: rgb(102, 99, 99);
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-top: 100px;
+}
