@@ -8,6 +8,13 @@ import { Row, Col, Button } from 'react-bootstrap';
 
 
 let jo = document.getElementById("data").value;
+let recEl = JSON.parse(document.getElementById("recruters").value)
+recEl.map((item) => {
+    item["name"] = item.first_name + " " + item.last_name;
+    delete item.first_name;
+    delete item.last_name;
+});
+console.log(recEl);
 
 let people = JSON.parse(jo);
 let skillsList = [];
@@ -17,15 +24,34 @@ const multiplier = 1;
 
 console.log(people);
 
+people.map((item) => {
+    item.skills = JSON.parse(item.skills);
+});
+
+people.map((item, i) => {
+    recEl.map((item2, j) => {
+
+        people[i].skills[item2.name] = people[i].skills[item2.id];
+        console.log(item2, !people[i].skills[item2.name]);
+        if (!people[i].skills[item2.name]) {
+            delete recEl[j];
+            delete people[i].skills[item2.name];
+            people.map((peopleObj, l) => {
+                delete people[l].skills[item2.name];
+            });
+        }
+        delete people[i].skills[item2.id];
+    });
+});
 
 
 for (let i = 0; i < people.length; i++) {
+    console.log(`loop ${i}`);
     if (people[i].skills) {
-
-        people[i].skills = JSON.parse(people[i].skills);
-
+        
         let temp = Object.getOwnPropertyNames(people[i].skills)
-        juryList = juryList.concat(temp)
+        juryList = juryList.concat(temp);
+
         let x;
         for (x in people[i].skills) {
 
@@ -923,13 +949,11 @@ class Person extends React.Component {
         return (
             <li className="person">
                 <Row>
-                    <Col lg={1}>
-                        <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
-                    </Col>
-                    <Col lg={10}>
+                    <Col lg={11}>
                         <Row>
                             <Col>
-                                <span className="personName">{this.props.personName}</span>
+                                <span className={`personId ${this.props.isActive}`} onClick={this.handleMarkCandidate}><span></span></span>
+                                <span className="personName ml-3">{this.props.personName}</span>
                                 <span
                                     className={`check box-shadow-1`}
                                     onClick={this.handleCheckCandidate}

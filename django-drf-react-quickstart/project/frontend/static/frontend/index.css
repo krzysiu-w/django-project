@@ -10,6 +10,7 @@
     .custom-chart{
         position: static!important;
         width: auto!important;
+        transform: translateX(0)!important;
     }
 }
 
