@@ -4,7 +4,9 @@
 
 3. Copy the django-drf-react-quickstart catalog into catalog with your environment.
 
-4. Replace the site-packages folder in /NameOfYourEnvironment/lib/python3.6 with this in our repositorium
+//4. Replace the site-packages folder in /NameOfYourEnvironment/lib/python3.6 with this in our repositorium
+
+4. Copy requirements.txt to /NameOfYourEnvironment/ folder and run "pip install -r requirements.txt"
 
 5. Open console and go to /NameOfYourEnvironment/ and run "source bin/activate" to activate your environment
 
