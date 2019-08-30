@@ -26,6 +26,9 @@ def logout_user(request):
             logout(request)
         return HttpResponseRedirect('/candidates')
 
+def redirect(request):
+        if request.method == 'GET':
+            return HttpResponseRedirect('/candidates')
 
 def get_skills(request, pk):
     if request.method == 'POST':
